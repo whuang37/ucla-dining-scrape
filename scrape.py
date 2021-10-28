@@ -1,8 +1,9 @@
-from bs4 import BeautifulSoup
+from bs4 import BeautifulSoup, FeatureNotFound
 import requests
 import json
 import string
 import re
+from datetime import datetime 
 
 """
 UNITS
@@ -59,11 +60,24 @@ def get_recipe_links(url):
     return recipe_link_dict
     
 def parse_recipe_link(url):
+    """Scrapes the recipe link for all the nutritional info.
+
+    Args:
+        url (string): Url to a recipe
+
+    Returns:
+        dict: Dictionary with all the nutritional and recipe info.
+    """
     print(url)
     req = requests.get(url)
     soup = BeautifulSoup(req.text, "lxml")
     
     recipe_info_dict = {}
+    
+    # error checking for items without info
+    redirect = soup.find("div", {"class": "redirect-info"})
+    if redirect != None:
+        return None
     
     # name 
     name = soup.find("h2").text
@@ -72,7 +86,8 @@ def parse_recipe_link(url):
     # brief info
     desc = soup.find("div", {"class":"description"})
     if desc != None:
-        recipe_info_dict["desc"] = desc.text.strip()
+        # replace for the prepared alcohol on new line
+        recipe_info_dict["desc"] = desc.text.strip().replace("\r\n                    \r\n", " ") 
     else:
         recipe_info_dict["desc"] = ""
     
@@ -123,11 +138,55 @@ def parse_recipe_link(url):
                 allergens = []
             
             recipe_info_dict["allergens"] = allergens
-    print(recipe_info_dict)
+    
+    return recipe_info_dict
+
+def get_curr_date(url):
+    req = requests.get(url)
+    soup = BeautifulSoup(req.text, "lxml")
+    
+    header = soup.find("h2", {"id":"page-header"}).text
+    
+    date = re.split(r"[^\d?],", header)[1].strip()
+    
+    return date
+
+def get_today_food():
+    """Parses through all three halls for the current day
+
+    Returns:
+        json: Json of all the foods
+    """
+    food = {}
+    food["date"] = get_curr_date(hall_urls["epicuria"])
+    
+    for hall, hall_url in hall_urls.items():
+        recipe_links = get_recipe_links(hall_url)
+        
+        food[hall] = {"breakfast": [],
+                      "lunch": [],
+                      "dinner": []}
+        
+        for meal, recipe_urls in recipe_links.items():
+            for recipe_url in recipe_urls:
+                food_info = parse_recipe_link(recipe_url)
+                
+                if food_info != None:
+                    food[hall][meal].append(food_info)
+                
+    
+    return food
+
+def save_json(data):
+    today = datetime.today().strftime('%m-%d-%Y')
+    with open(f"data/food-{today}.txt", "w") as outfile:
+        json.dump(data, outfile, indent=2)
+    
+    
+def main():
+    food = get_today_food()
+    save_json(food)
     
 if __name__ == "__main__":
-    # recipes = get_recipe_links(hall_urls["de_neve"])
-    
-    # for recipe in recipes["breakfast"]:
-        # parse_recipe_link(recipe)
-    parse_recipe_link("http://menu.dining.ucla.edu/Recipes/141297/1!10")
+    main()
+    # get_curr_date(hall_urls["epicuria"])
