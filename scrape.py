@@ -1,4 +1,4 @@
-from bs4 import BeautifulSoup, FeatureNotFound
+from bs4 import BeautifulSoup
 import requests
 import json
 import string
@@ -178,10 +178,14 @@ def get_today_food():
     return food
 
 def save_json(data):
+    """Save to a json file
+
+    Args:
+        data (json): Json type dict to be saved
+    """
     today = datetime.today().strftime('%m-%d-%Y')
     with open(f"data/food-{today}.txt", "w") as outfile:
         json.dump(data, outfile, indent=2)
-    
     
 def main():
     food = get_today_food()
@@ -189,4 +193,3 @@ def main():
     
 if __name__ == "__main__":
     main()
-    # get_curr_date(hall_urls["epicuria"])
