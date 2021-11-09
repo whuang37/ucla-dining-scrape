@@ -5,6 +5,11 @@ import Dashboard from './components/Dashboard/Dashboard';
 import Login from './components/Login/Login';
 import Preferences from './components/Preferences/Preferences';
 
+import Navbar from "./components/navbar";
+import Edit from "./components/edit";
+import Create from "./components/create";
+import RecordList from "./components/recordList";
+
 function App() {
   const [token, setToken] = useState();
   if(!token) {
@@ -19,10 +24,17 @@ function App() {
           </Route>
           <Route path="/preferences" element={<Preferences />}>
           </Route>
+          <Route exact path="/">
+            <RecordList />
+          </Route>
+          <Route path="/edit/:id" component={Edit} />
+          <Route path="/create">
+            <Create />
+          </Route>
         </Routes>
       </BrowserRouter>
     </div>
   );
-}
+};
 
 export default App;
