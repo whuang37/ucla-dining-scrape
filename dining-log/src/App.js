@@ -20,17 +20,8 @@ function App() {
       <h1>Application</h1>
       <BrowserRouter>
         <Routes>
-          <Route path="/dashboard" element={<Dashboard />}>
-          </Route>
-          <Route path="/preferences" element={<Preferences />}>
-          </Route>
-          <Route exact path="/">
-            <RecordList />
-          </Route>
-          <Route path="/edit/:id" component={Edit} />
-          <Route path="/create">
-            <Create />
-          </Route>
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/preferences" element={<Preferences />} />
         </Routes>
       </BrowserRouter>
     </div>

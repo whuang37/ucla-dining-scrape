@@ -19,6 +19,7 @@ module.exports = {
       }
       return callback(err);
          });
+
   },
 
   getDb: function () {
