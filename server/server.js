@@ -20,7 +20,14 @@ const uri =
   "mongodb+srv://rohan_sri:mongodb@cluster0.pbiwr.mongodb.net/?retryWrites=true&w=majority";
 // Create a new MongoClient
 const client = new MongoClient(uri);
-
+// const path = require('path');
+// app.get('/*', function(req, res) {
+//   res.sendFile(path.join(__dirname, '../dining-log/public/index.html'), function(err) {
+//     if (err) {
+//       res.status(500).send(err)
+//     }
+//   })
+// })
 
 app.listen(8080,async () => {
 
@@ -38,7 +45,7 @@ async function foo() {
     console.log("Connected successfully to server");
 
     const diningBase = client.db("diningLog");
-    const users = diningBase.collection("user s");
+    const users = diningBase.collection("users");
 
     // const doc = {
     //   email: "ryannguyen6392@gmail.com",

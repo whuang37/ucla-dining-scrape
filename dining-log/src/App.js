@@ -22,10 +22,11 @@ function App() {
         <Routes>
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/preferences" element={<Preferences />} />
+          <Route path="/"/>
         </Routes>
       </BrowserRouter>
     </div>
   );
-};
+}
 
 export default App;
