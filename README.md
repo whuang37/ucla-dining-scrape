@@ -7,3 +7,5 @@ Tracy Zhao
 Rohan Srivastava
 Maggie Li
 
+To download and install the latest version of bootstrap, run: npm install --save react-bootstrap
+Install styled components library: npm i styled-components

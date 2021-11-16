@@ -1,3 +1,4 @@
+import 'bootstrap/dist/css/bootstrap.min.css';  // Import the Bootstrap CSS
 import React from "react";
 import ReactDOM from "react-dom";
 import App from "./App";
