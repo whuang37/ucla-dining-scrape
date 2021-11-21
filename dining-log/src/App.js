@@ -14,8 +14,8 @@ import RecordList from "./components/recordList";
 function App() {
   const [token, setToken] = useState();
   if(!token) {
-    // return <Login setToken={setToken} />
-    return <NewUser></NewUser>
+    return <Login setToken={setToken} />
+    // return <NewUser setToken={setToken}></NewUser>
   }
   return (
     <div className="wrapper">
