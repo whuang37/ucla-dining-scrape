@@ -23,7 +23,6 @@ const StyledButton = styled(Button)`
     background-color: #F5D52D;
     display: block;
     margin: auto;
-    /* width: 10%; */
 `;
 
 export default function NewUser() {
