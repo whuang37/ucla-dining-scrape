@@ -1,27 +1,34 @@
-import React from "react";
+import React, { useState } from 'react';
+import './App.css';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import Dashboard from './components/Dashboard/Dashboard';
+import Login from './components/Login/Login';
+import Preferences from './components/Preferences/Preferences';
+import NewUser from './components/NewUser/NewUser';
 
-// We use Route in order to define the different routes of our application
-import { Route } from "react-router-dom";
-
-// We import all the components we need in our app
 import Navbar from "./components/navbar";
 import Edit from "./components/edit";
 import Create from "./components/create";
 import RecordList from "./components/recordList";
 
-const App = () => {
+function App() {
+  const [token, setToken] = useState();
+  if(!token) {
+    // return <Login setToken={setToken} />
+    return <NewUser></NewUser>
+  }
   return (
-    <div>
-      <Navbar />
-      <Route exact path="/">
-        <RecordList />
-      </Route>
-      <Route path="/edit/:id" component={Edit} />
-      <Route path="/create">
-        <Create />
-      </Route>
+    <div className="wrapper">
+      <h1>Application</h1>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/preferences" element={<Preferences />} />
+          <Route path="/"/>
+        </Routes>
+      </BrowserRouter>
     </div>
   );
-};
+}
 
 export default App;
