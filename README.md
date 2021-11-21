@@ -12,7 +12,7 @@ Run the following shell commands:
 ```
 cd server
 npm install mongodb express cors dotenv
-sudo npm install -g nodemon
+npm install -g nodemon
 nodemon server
 cd ucla-dining-scrape/dining-log
 npm install bootstrap
