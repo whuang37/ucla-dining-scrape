@@ -9,15 +9,22 @@
 
 ## How to run Locally:
 Run the following shell commands:
+
+Start MongoDB server:
 ```
 cd server
 npm install mongodb express cors dotenv
 npm install -g nodemon
 nodemon server
+```
+
+Start server for React project:
+```
 cd ucla-dining-scrape/dining-log
-npm install bootstrap
 npm install react-router-dom
 npm install axios
+npm install --save react-bootstrap
+npm i styled-components
 npm start
 ```
 
