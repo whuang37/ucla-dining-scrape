@@ -1,34 +1,42 @@
 import styled from "styled-components";
-import Button from 'react-bootstrap/Button';
 
 const ProfileDiv = styled.div`
 display: grid;
-grid-template-columns: 40% 60%
+grid-template-columns: 45% 55%;
+min-height: 300px;
+padding: 25px;
 `;
 
 const Image = styled.div`
-background-image: ${(props) => props.image};
-background-position: center;
+  height: 100%;
+  object-fit: cover;
+  background-image: url(${(props) => props.image});
+  background-position: center;
+  background-size: cover;
+  width: 75%;
+  height: 200%;
 `;
 
 const TextDiv = styled.div`
+display: grid;
+grid-template-rows: auto auto auto;
 font-family: Helvetica;
 `;
 
 export default function Dashboard(props) {
-  let image = props.image
-  let name = props.name
-  let dietaryRestrictions = props.dietaryRestrictions
-  let calories = props.calories
+  let image = props.image;
+  let name = props.name;
+  let dietaryRestrictions = props.dietaryRestrictions;
+  let calories = props.calories;
   return(
     <div>
       <h2>Your Profile</h2>
       <ProfileDiv> 
         <Image image = {image}/>
         <TextDiv>
-          <h3> {name} </h3>
-          <h3> Dietary Restrictions: {dietaryRestrictions} </h3>
-          <h3> Daily Calorie Goal: {calories} </h3>
+          <h3> <strong>{name}</strong> </h3>
+          <h3> <strong>Dietary Restrictions:</strong> {dietaryRestrictions} </h3>
+          <h3> <strong>Daily Calorie Goal:</strong> {calories} </h3>
         </TextDiv>
       </ProfileDiv>
     </div>
