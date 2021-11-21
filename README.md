@@ -10,7 +10,7 @@
 ## How to run Locally:
 Run the following shell commands:
 
-Start MongoDB server:
+To start the MongoDB server:
 ```
 cd server
 npm install mongodb express cors dotenv
@@ -18,7 +18,7 @@ npm install -g nodemon
 nodemon server
 ```
 
-Start server for React project:
+In a new terminal window, start the server for React project:
 ```
 cd ucla-dining-scrape/dining-log
 npm install react-router-dom
