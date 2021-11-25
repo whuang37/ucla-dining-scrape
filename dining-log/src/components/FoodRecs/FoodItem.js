@@ -15,7 +15,7 @@ const Information = styled.div`
     font-style: italic;
 `;
 
-export default function Food(props) {
+export default function Item(props) {
 const [checked, setChecked] = useState(false);
     return (
         <form> 

@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import Food from "./Food";
+import FoodItem from "./FoodItem";
 
 // get list of all foods from the hall assigned to props.hall
 // display all foods (props.name, props.allergens, props.calories)
@@ -32,12 +32,12 @@ export default function List(props) {
         <div>
             <Container>
                 <Header>{props.meal} at {props.hall}</Header>
-                <Food name="Salad" allergens="soy, dairy, nuts" calories="227"/>
-                <Food name="Brown Rice" allergens="gluten" calories="292"/>
-                <Food name="Egg Whites Omelet" allergens="eggs" calories="174"/>
-                <Food name="Sandwich" allergens="gluten" calories="800"/>
-                <Food name="Grilled Chicken" calories="112"/>
-                <Food name="Blueberry Topping" allergens="eggs" calories="41"/>
+                <FoodItem name="Salad" allergens="soy, dairy, nuts" calories="227"/>
+                <FoodItem name="Brown Rice" allergens="gluten" calories="292"/>
+                <FoodItem name="Egg Whites Omelet" allergens="eggs" calories="174"/>
+                <FoodItem name="Sandwich" allergens="gluten" calories="800"/>
+                <FoodItem name="Grilled Chicken" calories="112"/>
+                <FoodItem name="Blueberry Topping" allergens="eggs" calories="41"/>
             </Container>
         </div>
     )
