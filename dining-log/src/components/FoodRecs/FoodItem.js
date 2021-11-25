@@ -18,19 +18,21 @@ const Information = styled.div`
 export default function Item(props) {
 const [checked, setChecked] = useState(false);
     return (
-        <form> 
-        <input
-            type="checkbox"
-            checked={checked}
-            onChange={e => setChecked(e.target.checked)}
-        />
-        <FoodName>{props.name} </FoodName>
-        <div>
-            <Information>
-                <div>Allergens: {props.allergens} </div>    
-                <div>Calories: {props.calories}</div>
-            </Information>
+        <div> 
+            <form> 
+                <input
+                    type="checkbox"
+                    checked={checked}
+                    onChange={e => setChecked(e.target.checked)}
+                />
+                <FoodName>{props.name}</FoodName>
+            </form>
+            <div>
+                <Information>
+                    <div>Allergens: {props.allergens} </div>    
+                    <div>Calories: {props.calories}</div>
+                </Information>
+            </div>
         </div>
-        </form>
     )
 }

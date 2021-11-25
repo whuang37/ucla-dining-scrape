@@ -1,11 +1,15 @@
-import FoodList from "./FoodItem";
+import FoodList from "./FoodList";
 import FilterBar from "./FilterBar";
+import NavBar from "../navbar"
 
 export default function Page(props) {
     return (
         <div>
+            <NavBar/>
             <FilterBar/>
-            <FoodList meal="Breakfast" hall="De Neve"/>
+            <div>
+                <FoodList meal="Breakfast" hall="De Neve"/>
+            </div>
         </div>
     )
 }
