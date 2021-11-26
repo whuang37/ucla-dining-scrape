@@ -51,7 +51,7 @@ app.listen(8080,async () => {
 
   var cursor = client.db("diningLog").collection('food').find({ 
     meal: "breakfast",
-    $or: [ {allergens: "wheat"}, {allergens: "eggs"}],
+    allergens: {$nin: ["wheat", "eggs"]},
     calories: { $lt: 300 },
     hall: "de_neve"
   });
