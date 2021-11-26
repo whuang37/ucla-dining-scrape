@@ -20,20 +20,50 @@ const uri =
   "mongodb+srv://rohan_sri:mongodb@cluster0.pbiwr.mongodb.net/?retryWrites=true&w=majority";
 // Create a new MongoClient
 const client = new MongoClient(uri);
-// const path = require('path');
-// app.get('/*', function(req, res) {
-//   res.sendFile(path.join(__dirname, '../dining-log/public/index.html'), function(err) {
-//     if (err) {
-//       res.status(500).send(err)
-//     }
-//   })
-// })
+
+// app.post('/login', async(req, res) => {
+//   console.log(req.body);
+//   await client.connect();
+
+//   var cursor = client.db("diningLog").collection('food').find({allergens: ["gluten"]});
+//   function iterateFunc(doc) {
+//     console.log(JSON.stringify(doc, null, 4));
+//   }
+ 
+//  function errorFunc(error) {
+//     console.log(error);
+//   }
+ 
+//  cursor.forEach(iterateFunc, errorFunc);
+
+// });
+
+
 
 app.listen(8080,async () => {
 
   await foo();
   console.log(`Server is running on port: ${port}`);
   console.log('API is running on http://localhost:8080/login')
+
+  await client.connect();
+
+
+  var cursor = client.db("diningLog").collection('food').find({ 
+    meal: "breakfast",
+    $or: [ {allergens: "wheat"}, {allergens: "eggs"}],
+    calories: { $lt: 300 },
+    hall: "de_neve"
+  });
+  function iterateFunc(doc) {
+    console.log(JSON.stringify(doc, null, 4));
+  }
+ 
+  function errorFunc(error) {
+    console.log(error);
+  }
+
+  cursor.forEach(iterateFunc, errorFunc);
 });
 
 async function foo() {
