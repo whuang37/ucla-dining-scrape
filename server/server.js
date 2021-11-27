@@ -2,14 +2,7 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 require("dotenv").config({ path: "./config.env" });
-const port = process.env.PORT || 5000;
 app.use(cors());
-
-// app.use('/login', (req, res) => {
-//   res.send({
-//     token: 'test123'
-//   });
-// });
 
 app.use(express.json());
 app.use(require("./routes/record"));
@@ -20,28 +13,78 @@ const uri =
   "mongodb+srv://rohan_sri:mongodb@cluster0.pbiwr.mongodb.net/?retryWrites=true&w=majority";
 // Create a new MongoClient
 const client = new MongoClient(uri);
-// const path = require('path');
-// app.get('/*', function(req, res) {
-//   res.sendFile(path.join(__dirname, '../dining-log/public/index.html'), function(err) {
-//     if (err) {
-//       res.status(500).send(err)
-//     }
-//   })
-// })
+
+app.get('/auth', function(req, res){
+  res.send({response:app.get('response')});
+});
+
+app.get('/signedup', function(req, res){
+  res.send({response:app.get('su')});
+});
+
+app.post('/signup', async (req, res) => {
+  await client.connect();
+
+  const users = client.db("diningLog").collection('users');
+
+
+  const cursor = users.find({username: req.body.username})
+
+  const user = cursor.next();
+  user.then((u) => {
+      if(u)
+      {
+        app.set('su', 'failed');
+          res.redirect('/signedup');
+      }
+      else
+      {
+        users.insertOne(req.body, (err, data) => {
+          if(err) return console.log(err);
+          
+        });
+        app.set('su', 'success');
+          res.redirect('/signedup');
+      }
+    });
+  });
+
 
 app.post('/login', async (req, res) => {
-  console.log(req.body);
   await client.connect();
-  client.db("diningLog").collection('users').insertOne(req.body, (err, data) => {
-      if(err) return console.log(err);
-      res.send(('saved to db: ' + data));
-  })
-  await client.close();
+
+  const users = client.db("diningLog").collection('users');
+
+
+  const cursor = users.find({username: req.body.username})
+
+
+  const user = cursor.next();
+  user.then((u) => {
+      if(u)
+      {
+        if(req.body.password == u.password)
+        {
+          app.set('response', 'authorized');
+          res.redirect('/auth');
+        }
+        else
+        {
+          app.set('response', 'failed');
+          res.redirect('/auth');
+        }
+      }
+      else
+      {
+        app.set('response', 'new');
+          res.redirect('/auth');
+        
+      }
+    });
+
 });
 
 app.listen(8080, () => {
-
-  //await foo();
-  console.log(`Server is running on port: ${port}`);
-  console.log('API is running on http://localhost:8080/login')
+  console.log(`Server is running on port: 8080`);
+  console.log('API is running on http://localhost:8080')
 });
