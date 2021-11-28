@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
+import {Navigate } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 
 const Text = styled.div`
@@ -33,15 +34,27 @@ const SignUpButton = styled(StyledButton)`
 `;
 
 export default function Landing(props) {
+
+    const [button, setButton] = useState();
+
+    if(button == 'login')
+        return <Navigate to="/login" />;
+    else if (button == 'signup')
+        return <Navigate to="/signup" />;
+
+    let login = () => {setButton('login');};
+    let signup = () => {setButton('signup');};
+    
     return (
         <div>
             <Text>
                 UCLA Dining Hall Food Log
             </Text>
             <ButtonDiv>
-                <LoginButton>Login</LoginButton>
-                <SignUpButton>Sign Up</SignUpButton>
+                <LoginButton onClick={login}>Login</LoginButton>
+                <SignUpButton onClick={signup}>Sign Up</SignUpButton>
             </ButtonDiv>
         </div>
       );
+    
 }

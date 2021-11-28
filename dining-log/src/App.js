@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './App.css';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Dashboard from './components/Dashboard/Dashboard';
@@ -7,10 +7,8 @@ import Preferences from './components/Preferences/Preferences';
 import SignUp from './components/SignUp/SignUp';
 import NewUser from './components/NewUser/NewUser';
 import FoodPage from "./components/FoodRecs/FoodPage";
-import Navbar from "./components/navbar";
-import Edit from "./components/edit";
-import Create from "./components/create";
-import RecordList from "./components/recordList";
+import Landing from "./components/Landing/Landing";
+
 
 
 export default class App extends React.Component {
@@ -24,10 +22,12 @@ export default class App extends React.Component {
       {/* <h1>Application</h1> */}
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Login />} />
+          <Route path="/" element={<Landing />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/preferences" element={<Preferences />} />
+          <Route path="/foodpage" element={<FoodPage />} />
+          <Route path="/login" element={<Login />} />
         </Routes>
       </BrowserRouter>
     </div>);
