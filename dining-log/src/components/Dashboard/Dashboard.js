@@ -1,5 +1,4 @@
-import React, { useState} from 'react';
-import { renderMatches } from 'react-router';
+import React, { useState, useEffect} from 'react';
 import styled from "styled-components";
 import NavBar from "../navbar.js"
 
@@ -25,7 +24,7 @@ grid-template-rows: auto auto auto;
 font-family: Helvetica;
 `;
 
-async function getUserData(credentials) {
+async function sendUserData(credentials) {
   return fetch('http://localhost:8080/user', {
     method: 'POST',
     headers: {
@@ -39,12 +38,21 @@ async function getUserData(credentials) {
 export default function Dashboard({un}) {
   const [dietaryRestrictions, setDietaryRestrictions] = useState();
   const [calories, setCalories] = useState();
-  /* const token = await getUserData({
-    {un}});
-    fetch('http://localhost:8080/user')
+  useEffect(() => {
+
+    async function middle(){
+      await sendUserData({username:un}) 
+    }
+  middle();
+
+    fetch('http://localhost:8080/profile')
     .then(response => response.json())
-    .then(data => {}); */
-  return(
+    .then(data => {
+      setDietaryRestrictions(data.allergens); setCalories(data.calories);});  
+  }, [un]);
+  
+
+      return(
       <div>
         <NavBar/>
         <h2>Your Profile</h2>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import {Navigate } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
@@ -37,9 +37,9 @@ export default function Landing(props) {
 
     const [button, setButton] = useState();
 
-    if(button == 'login')
+    if(button === 'login')
         return <Navigate to="/login" />;
-    else if (button == 'signup')
+    else if (button === 'signup')
         return <Navigate to="/signup" />;
 
     let login = () => {setButton('login');};

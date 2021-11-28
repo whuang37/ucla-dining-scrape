@@ -1,5 +1,5 @@
 import React, { useState} from 'react';
-import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
+import {  Navigate } from 'react-router-dom';
 import styles from './Login.module.css';
 
  async function loginUser(credentials) {
@@ -21,7 +21,7 @@ export default function Login(props) {
   const handleSubmit = async e => {
     e.preventDefault();
 
-    const token = await loginUser({
+    await loginUser({
       username,
       password
     });
@@ -29,7 +29,7 @@ export default function Login(props) {
 
     fetch('http://localhost:8080/auth')
   .then(response => response.json())
-  .then(data => {  if(data.response == 'authorized') {
+  .then(data => {  if(data.response === 'authorized') {
                                       setSubmit(true); 
                                     }
                                     else
@@ -40,17 +40,16 @@ export default function Login(props) {
     
   }
 
-  let responseText;
   const renderResponseText = () => {
-    if (wrongPass == 'failed') {
+    if (wrongPass === 'failed') {
       return <div class={styles.loginMessage}>Wrong Password</div>;
-    } else if (wrongPass == 'new'){
+    } else if (wrongPass === 'new'){
       return <div class={styles.loginMessage}>No account found</div>;
     }
   }
   const handleUsername = (e) => {
     setUserName(e.target.value); 
-    {props.setUsername(e.target.value)};
+    props.setUsername(e.target.value);
   }
   if(!submit)
   {
