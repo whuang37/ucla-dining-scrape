@@ -1,5 +1,6 @@
 import React, { useState} from 'react';
 import styles from './SignUp.module.css';
+import {Link} from 'react-router-dom';
 
  async function signUpUser(credentials) {
     return fetch('http://localhost:8080/signup', {
@@ -33,7 +34,7 @@ export default function SignUp(props) {
   let responseText;
   const renderResponseText = () => {
     if (submit == 'success') {
-      return <div class={styles.signupSuccess}>Account created successfully, return to home page to sign in</div>;
+      return <div class={styles.signupSuccess}> Account created successfully, now <Link to="/login">Sign in</Link> </div>;
     } else if (submit == 'failed'){
       return  <div class={styles.signupError}>Account already exists</div>;
     }

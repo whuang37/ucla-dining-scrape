@@ -16,7 +16,7 @@ const Information = styled.div`
 `;
 
 export default function Item(props) {
-const [checked, setChecked] = useState(false);
+    const [checked, setChecked] = useState(false);
     return (
         <div> 
             <form> 

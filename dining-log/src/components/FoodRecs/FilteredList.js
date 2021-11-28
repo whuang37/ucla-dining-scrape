@@ -4,13 +4,25 @@ import styles from "./Page.module.css";
 import { useState } from 'react';
 import FoodList from "./FoodList";
 
-// should filter button be disabled until the user chooses a dining hall and meal??
+
+async function filter(credentials) {
+    return fetch('http://localhost:8080/filter', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(credentials)
+    })
+      .then(data => data.json())
+}
 
 export default function Filter(props) {
-    const [meal, setMeal]=useState('Meal');
-    const [hall, setHall]=useState('Dining Hall');
+    const [meal, setMeal] = useState('Meal');
+    const [hall, setHall] = useState('Dining Hall');
     const [allergens, setAllergens] = useState(false);
     const [calories, setCalories] = useState(false);
+    const [selectedFoods, setSelectedFoods] = useState({});
+    const [displayFoods, setDisplayFoods] = useState({});   //displayFoods = response + selectedFoods
 
     const handleMeal=(e)=>{
         setMeal(e);
@@ -19,9 +31,32 @@ export default function Filter(props) {
         setHall(e);
     }
 
+    // callback function to add foodItem to array of selectedFoods, pass function down to foodlist --> fooditem as a prop, bind checked state to function and pass fooditem back up to filteredList so we can add it to the array
+
+    // object {name, allergens, calories}
+    
+
+    const handleChange = async e => {
+        e.preventDefault();
+    
+        const token = await filter({
+          meal,
+          hall,
+          allergens,
+          calories,
+          selectedFoods
+        });
+
+        fetch('http://localhost:8080/auth')
+        .then(response => response.json())
+        .then(data => {
+          
+        });
+    }
+
     return (
         <div>
-            <div class={styles.filterBar}>
+            <div class={styles.filterBar} onChange={handleChange}>
                 <Dropdown onSelect={handleMeal}>
                     <Dropdown.Toggle variant="primary" id="dropdown-basic">
                         {meal}
@@ -50,7 +85,7 @@ export default function Filter(props) {
                         <input
                             type="checkbox"
                             checked={allergens}
-                            onChange={e => setAllergens(e.target.checked)}
+                            onClick={e => setAllergens(e.target.checked)}
                         />
                         <span class={styles.label}>Filter by Dietary Restrictions</span>
                     </label>
@@ -61,7 +96,7 @@ export default function Filter(props) {
                         <input
                             type="checkbox"
                             checked={calories}
-                            onChange={e => setCalories(e.target.checked)}
+                            onClick={e => setCalories(e.target.checked)}
                         />
                         <span class={styles.label}>Filter by Daily Calorie Goal</span>
                     </label>

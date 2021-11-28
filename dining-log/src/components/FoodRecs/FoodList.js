@@ -3,7 +3,7 @@ import styled from "styled-components";
 import FoodItem from "./FoodItem";
 
 // get list of all foods from the hall assigned to props.hall
-// display all foods (props.name, props.allergens, props.calories)
+// display all foods (props.list.name, props.list.allergens, props.list.calories)
 // loop through array of all foods
 
 const Header = styled.div`
@@ -19,7 +19,6 @@ const Container = styled.div`
     grid-template-columns: 1fr 1fr 1fr; 
     gap: 5px;
     justify-content: center;
-    /* width: auto; */
     border: 1px solid black;
     margin: 2% 2%;
     padding-left: 2%;

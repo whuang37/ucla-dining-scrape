@@ -1,5 +1,5 @@
 import React, { useState} from 'react';
-import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
+import { BrowserRouter, Route, Routes, Navigate, Link } from 'react-router-dom';
 import styles from './Login.module.css';
 
 async function loginUser(credentials) {
@@ -65,6 +65,7 @@ export default function Login(props) {
             </label>
             <br/>
             <button class={styles.loginSubmit}type="submit">Login</button>
+            <div> Need an account? <Link to="/signup">Sign up</Link> </div>
           </form>
         </div>
       </div>
