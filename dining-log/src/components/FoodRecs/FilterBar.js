@@ -1,37 +1,47 @@
 import React from "react";
 import Dropdown from 'react-bootstrap/Dropdown';
-import Button from 'react-bootstrap/Button';
 import styles from "./Page.module.css";
 import { useState } from 'react';
 
 // should filter button be disabled until the user chooses a dining hall and meal??
 
 export default function Filter(props) {
+    const [hall, setHall]=useState('Select Dining Hall');
+    const [meal, setMeal]=useState('Select Meal');
     const [allergens, setAllergens] = useState(false);
     const [calories, setCalories] = useState(false);
+
+    const handleHall=(e)=>{
+        setHall(e);
+    }
+
+    const handleMeal=(e)=>{
+        setMeal(e);
+    }
+
     return (
         <div class={styles.filterBar}>
-            <Dropdown>
+            <Dropdown onSelect={handleHall}>
                 <Dropdown.Toggle variant="primary" id="dropdown-basic">
-                    Select Dining Hall
+                    {hall}
                 </Dropdown.Toggle>
 
                 <Dropdown.Menu variant="dark">  
-                    <Dropdown.Item href="#/action-1">Bruin Plate</Dropdown.Item>
-                    <Dropdown.Item href="#/action-2">De Neve</Dropdown.Item>
-                    <Dropdown.Item href="#/action-3">Epicuria</Dropdown.Item>
+                    <Dropdown.Item eventKey="Bruin Plate">Bruin Plate</Dropdown.Item>
+                    <Dropdown.Item eventKey="De Neve">De Neve</Dropdown.Item>
+                    <Dropdown.Item eventKey="Epicuria">Epicuria</Dropdown.Item>
                 </Dropdown.Menu>
             </Dropdown>
 
-            <Dropdown>
+            <Dropdown onSelect={handleMeal}>
                 <Dropdown.Toggle variant="primary" id="dropdown-basic">
-                    Select Meal
+                    {meal}
                 </Dropdown.Toggle>
 
                 <Dropdown.Menu variant="dark">
-                    <Dropdown.Item href="#/action-4">Breakfast</Dropdown.Item>
-                    <Dropdown.Item href="#/action-5">Lunch</Dropdown.Item>
-                    <Dropdown.Item href="#/action-6">Dinner</Dropdown.Item>
+                    <Dropdown.Item eventKey="Breakfast">Breakfast</Dropdown.Item>
+                    <Dropdown.Item eventKey="Lunch">Lunch</Dropdown.Item>
+                    <Dropdown.Item eventKey="Dinner">Dinner</Dropdown.Item>
                 </Dropdown.Menu>
             </Dropdown>
 
@@ -57,7 +67,7 @@ export default function Filter(props) {
                 </label>
             </form>
 
-            <Button variant="outline-success" size="sm">Find Food</Button>
+            <button class={styles.button}>Find Food</button>
 
         </div>
     )

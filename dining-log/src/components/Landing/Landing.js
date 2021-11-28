@@ -6,8 +6,7 @@ const Text = styled.div`
     font-family: Helvetica;
     text-align: center;
     font-size: 64px;
-    padding-top: 175px;
-    padding-bottom: 25px;
+    margin: 12% auto 2% auto;
 `;
 
 const ButtonDiv = styled.div`
@@ -22,7 +21,8 @@ const StyledButton = styled.button`
     font-family: Helvetica;
     border: none;
     border-radius: 15px;
-    color: white;
+    color: black;
+    padding: 20px;
 `;
 
 const LoginButton = styled(StyledButton)`

@@ -64,7 +64,7 @@ export default function Login(props) {
               <input class={styles.loginInput} type="password" placeholder="Password" onChange={e => setPassword(e.target.value)} required/>
             </label>
             <br/>
-            <button class={styles.loginSubmit}type="submit">Submit</button>
+            <button class={styles.loginSubmit}type="submit">Login</button>
           </form>
         </div>
       </div>
