@@ -1,0 +1,40 @@
+h1 {
+    font-family: Arial, Helvetica, sans-serif;   
+    font-size: 48px; 
+    text-align: center;
+    margin: 5% auto 3% auto;
+}
+
+.formWrapper {
+    display: block;
+    text-align: center;
+}
+
+.loginInput {
+    background: #3C99EF;
+    border-radius: 8px;
+    border: transparent;
+    padding: 10px;
+    margin-bottom: 5%;
+    width: 300px;;
+}
+
+::placeholder{
+    color: black;
+}
+
+.loginSubmit {
+    background: #ffc107;
+    border-radius: 8px;
+    border: transparent;
+    padding: 8px 30px;
+    margin-top: 1%;
+}
+
+.loginMessage {
+    color: red;
+    text-transform: uppercase;
+    font-size: 24px;
+    text-align: center;
+    margin-bottom: 2%;
+}

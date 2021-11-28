@@ -1,0 +1,45 @@
+h1 {
+    font-family: Arial, Helvetica, sans-serif;   
+    font-size: 48px; 
+    text-align: center;
+    margin: 5% auto 3% auto;
+}
+
+.signupWrapper {
+    display: block;
+    text-align: center;
+}
+
+.signupInput {
+    background: #3C99EF;
+    border-radius: 8px;
+    border: transparent;
+    padding: 10px;
+    margin-bottom: 5%;
+    width: 300px;;
+}
+
+.signupSubmit {
+    background: #ffc107;
+    border-radius: 8px;
+    border: transparent;
+    padding: 8px 30px;
+    margin-top: 1%;
+}
+
+.signupSuccess {
+    color: green;
+    text-transform: uppercase;
+    font-size: 24px;
+    text-align: center;
+    margin-bottom: 2%;
+}
+
+.signupError {
+    color: red;
+    text-transform: uppercase;
+    font-size: 24px;
+    text-align: center;
+    margin-bottom: 2%;
+}
+

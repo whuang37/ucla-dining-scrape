@@ -55,8 +55,12 @@ export default function NewUser({ setToken }) {
             <Header>Welcome</Header>
             <FormWrapper>
                 <Form.Group className="mb-3" controlId="signUpForm">
-                    <FieldWrapper><Form.Control type="email" placeholder="Email" inputRef={ref => setUserName(ref.value)}  /></FieldWrapper>
-                    <FieldWrapper><Form.Control type="password" placeholder="Password" inputRef={ref => setPassword(ref.value)}  /></FieldWrapper>
+                    <FieldWrapper>
+                      <Form.Control type="email" placeholder="Email" inputRef={ref => setUserName(ref.value)}/>
+                    </FieldWrapper>
+                    <FieldWrapper>
+                      <Form.Control type="password" placeholder="Password" inputRef={ref => setPassword(ref.value)}/>
+                    </FieldWrapper>
                 </Form.Group>
             </FormWrapper>
             <StyledButton type="submit"> Sign Up </StyledButton>
