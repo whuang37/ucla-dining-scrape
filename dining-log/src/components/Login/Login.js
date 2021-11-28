@@ -44,7 +44,7 @@ export default function Login(props) {
     if (wrongPass == 'failed') {
       return <div class={styles.loginMessage}>Wrong Password</div>;
     } else if (wrongPass == 'new'){
-      return <div class={styles.loginMessage}>No account found</div>;
+      return <div class={styles.loginMessage}>No account found, please sign up</div>;
     }
   }
 
