@@ -5,12 +5,12 @@ h1 {
     margin: 5% auto 3% auto;
 }
 
-.form-wrapper {
+.formWrapper {
     display: block;
     text-align: center;
 }
 
-input {
+.loginInput {
     background: #3C99EF;
     border-radius: 8px;
     border: transparent;
@@ -23,7 +23,7 @@ input {
     color: black;
 }
 
-button {
+.loginSubmit {
     background: #ffc107;
     border-radius: 8px;
     border: transparent;
@@ -31,7 +31,7 @@ button {
     margin-top: 1%;
 }
 
-h6 {
+.loginMessage {
     color: red;
     text-transform: uppercase;
     font-size: 24px;

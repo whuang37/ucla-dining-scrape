@@ -1,5 +1,5 @@
 import React, { useState} from 'react';
-import './SignUp.css';
+import styles from './SignUp.module.css';
 
  async function signUpUser(credentials) {
     return fetch('http://localhost:8080/signup', {
@@ -34,28 +34,28 @@ export default function SignUp(props) {
   let responseText;
   const renderResponseText = () => {
     if (submit == 'success') {
-      return <h6 style={{ color: 'green' }}>Account created successfully</h6>;
+      return <div class={styles.signupSuccess}>Account created successfully</div>;
     } else if (submit == 'failed'){
-      return  <h6 style={{ color: 'red' }}>Account already exists</h6>;
+      return  <div class={styles.signupError}>Account already exists</div>;
     }
   }
     return(
-      <div className="signup-wrapper">
-        <h1>Please Sign Up</h1>
+      <div>
+        <h1>Sign Up</h1>
         {renderResponseText()}
-        <form onSubmit={handleSubmit}>
-          <label>
-            <p>Username</p>
-            <input type="text" onChange={e => setUserName(e.target.value)}/>
-          </label>
-          <label>
-            <p>Password</p>
-            <input type="password" onChange={e => setPassword(e.target.value)}/>
-          </label>
-          <div>
-            <button type="submit">Submit</button>
-          </div>
-        </form>
+        <div class={styles.signupWrapper}>
+          <form onSubmit={handleSubmit}>
+            <label> 
+              <input class={styles.signupInput} type="text" placeholder="Email" onChange={e => setUserName(e.target.value)} required/>
+            </label>
+            <br/>
+            <label>
+              <input class={styles.signupInput} type="password" placeholder="Password" onChange={e => setPassword(e.target.value)} required/>
+            </label>
+            <br/>
+            <button class={styles.signupSubmit} type="submit">Submit</button>
+          </form>
+        </div>
       </div>
     )
 }

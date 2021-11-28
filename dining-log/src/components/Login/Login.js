@@ -1,6 +1,6 @@
 import React, { useState} from 'react';
 import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
-import './Login.css';
+import styles from './Login.module.css';
 
 async function loginUser(credentials) {
     return fetch('http://localhost:8080/login', {
@@ -42,9 +42,9 @@ export default function Login(props) {
   let responseText;
   const renderResponseText = () => {
     if (wrongPass == 'failed') {
-      return <h6>Wrong Password</h6>;
+      return <div class={styles.loginMessage}>Wrong Password</div>;
     } else if (wrongPass == 'new'){
-      return <h6>No account found</h6>;
+      return <div class={styles.loginMessage}>No account found</div>;
     }
   }
 
@@ -54,17 +54,17 @@ export default function Login(props) {
       <div>
         <h1>Log In</h1>
         {renderResponseText()}
-        <div className="form-wrapper">
+        <div class={styles.formWrapper}>
           <form onSubmit={handleSubmit}>
             <label>
-              <input type="text" placeholder="Email" onChange={e => setUserName(e.target.value)} required/>
+              <input class={styles.loginInput} type="text" placeholder="Email" onChange={e => setUserName(e.target.value)} required/>
             </label>
             <br/>
             <label>
-              <input type="password" placeholder="Password" onChange={e => setPassword(e.target.value)} required/>
+              <input class={styles.loginInput} type="password" placeholder="Password" onChange={e => setPassword(e.target.value)} required/>
             </label>
             <br/>
-            <button type="submit">Submit</button>
+            <button class={styles.loginSubmit}type="submit">Submit</button>
           </form>
         </div>
       </div>
