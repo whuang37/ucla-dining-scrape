@@ -42,9 +42,9 @@ export default function Login(props) {
   let responseText;
   const renderResponseText = () => {
     if (wrongPass == 'failed') {
-      return <h6 style={{ color: 'red' }}>Wrong Password</h6>;
+      return <h6>Wrong Password</h6>;
     } else if (wrongPass == 'new'){
-      return  <h6 style={{ color: 'red' }}>No account found</h6>;
+      return <h6>No account found</h6>;
     }
   }
 
@@ -57,11 +57,11 @@ export default function Login(props) {
         <div className="form-wrapper">
           <form onSubmit={handleSubmit}>
             <label>
-              <input type="text" placeholder="Email" onChange={e => setUserName(e.target.value)}/>
+              <input type="text" placeholder="Email" onChange={e => setUserName(e.target.value)} required/>
             </label>
             <br/>
             <label>
-              <input type="password" placeholder="Password" onChange={e => setPassword(e.target.value)}/>
+              <input type="password" placeholder="Password" onChange={e => setPassword(e.target.value)} required/>
             </label>
             <br/>
             <button type="submit">Submit</button>
