@@ -26,17 +26,18 @@ const Container = styled.div`
     padding-top: 1%;
 `;
 
+// props = meal, hall, array of food objects {name, allergens, calories}
 export default function List(props) {
+    const foodList = props.display.map(function(foods){
+        return <div> <FoodItem name={foods.name} allergens={foods.allergens} calories={foods.calories} 
+                        update={props.updateSelected}/> </div>;
+    })
+
     return (
         <div>
             <Container>
                 <Header>{props.meal} at {props.hall}</Header>
-                <FoodItem name="Salad" allergens="soy, dairy, nuts" calories="227"/>
-                <FoodItem name="Brown Rice" allergens="gluten" calories="292"/>
-                <FoodItem name="Egg Whites Omelet" allergens="eggs" calories="174"/>
-                <FoodItem name="Sandwich" allergens="gluten" calories="800"/>
-                <FoodItem name="Grilled Chicken" calories="112"/>
-                <FoodItem name="Blueberry Topping" allergens="eggs" calories="41"/>
+                {foodList}
             </Container>
         </div>
     )

@@ -17,13 +17,19 @@ const Information = styled.div`
 
 export default function Item(props) {
     const [checked, setChecked] = useState(false);
+
+    const handleChecked=(e)=>{
+        setChecked(e);
+        {props.update(e)}
+    }
+
     return (
         <div> 
             <form> 
                 <input
                     type="checkbox"
                     checked={checked}
-                    onChange={e => setChecked(e.target.checked)}
+                    onChange={handleChecked}
                 />
                 <FoodName>{props.name}</FoodName>
             </form>
