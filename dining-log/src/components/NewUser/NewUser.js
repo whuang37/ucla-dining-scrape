@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components"
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import PropTypes from 'prop-types';
 
 const Header = styled.h1`
     font-family: Arial, Helvetica, sans-serif;   
@@ -26,15 +27,37 @@ const StyledButton = styled(Button)`
     /* width: 10%; */
 `;
 
-export default function NewUser() {
+async function signUser(credentials) {
+    return fetch('http://localhost:8080/signup', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(credentials)
+    })
+      .then(data => data.json())
+   }
+
+export default function NewUser({ setToken }) {
+    const [username, setUserName] = useState();
+    const [password, setPassword] = useState();
+  
+    const handleSubmit = async e => {
+      e.preventDefault();
+      const token = await signUser({
+        username,
+        password
+      });
+      setToken(token);
+    }
+
     return(
         <div>
             <Header>Welcome</Header>
             <FormWrapper>
                 <Form.Group className="mb-3" controlId="signUpForm">
-                    <FieldWrapper><Form.Control type="email" placeholder="Email" /></FieldWrapper>
-                    <FieldWrapper><Form.Control type="password" placeholder="Password" /></FieldWrapper>
-                    <FieldWrapper><Form.Control type="password" placeholder="Confirm Password" /></FieldWrapper>
+                    <FieldWrapper><Form.Control type="email" placeholder="Email" inputRef={ref => setUserName(ref.value)}  /></FieldWrapper>
+                    <FieldWrapper><Form.Control type="password" placeholder="Password" inputRef={ref => setPassword(ref.value)}  /></FieldWrapper>
                 </Form.Group>
             </FormWrapper>
             <StyledButton type="submit"> Sign Up </StyledButton>
@@ -42,7 +65,9 @@ export default function NewUser() {
     );
 }
 
-
+NewUser.propTypes = {
+    setToken: PropTypes.func.isRequired
+  };
 
 
 
