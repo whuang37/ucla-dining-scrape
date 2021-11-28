@@ -6,6 +6,7 @@ import Login from './components/Login/Login';
 import Preferences from './components/Preferences/Preferences';
 import SignUp from './components/SignUp/SignUp';
 import NewUser from './components/NewUser/NewUser';
+import FoodPage from "./components/FoodRecs/FoodPage";
 import Navbar from "./components/navbar";
 import Edit from "./components/edit";
 import Create from "./components/create";

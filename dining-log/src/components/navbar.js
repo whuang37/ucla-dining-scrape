@@ -3,16 +3,17 @@ import styled from "styled-components";
 import { Container, Navbar, Nav, NavItem, NavDropdown, MenuItem } from 'react-bootstrap';
 
 const NavContainer = styled(Container)`
-font-family: Helvetica;
-text-align: center;
-background-color: #C4C4C4;
+    font-family: Helvetica;
+    text-align: center;
+    background-color: #C4C4C4;
+    width: 100%;
 `;
 
 const StyledNav = styled(Nav)`
-display: grid;
-grid-template-columns: 1fr 1fr 1fr;
-text-align: left;
-padding-left: 75px; 
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    text-align: left;
+    padding-left: 75px; 
 `;
 
 export default function Landing(props) {

@@ -24,7 +24,6 @@ const StyledButton = styled(Button)`
     background-color: #F5D52D;
     display: block;
     margin: auto;
-    /* width: 10%; */
 `;
 
 async function signUser(credentials) {

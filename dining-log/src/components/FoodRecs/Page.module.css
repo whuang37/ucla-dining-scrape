@@ -1,0 +1,11 @@
+.filterBar {
+    display: grid;
+    grid-template-columns: repeat(5, auto);
+    justify-content: center;
+    margin-top: 2%;
+}
+
+.label {
+    padding: 7px;
+    white-space: nowrap;
+}
