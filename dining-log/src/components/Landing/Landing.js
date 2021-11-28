@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import {Navigate } from 'react-router-dom';
-import Button from 'react-bootstrap/Button';
+import {Navigate} from 'react-router-dom';
 
 const Text = styled.div`
     font-family: Helvetica;
@@ -18,11 +17,12 @@ const ButtonDiv = styled.div`
     grid-gap: 100px;
 `;
 
-const StyledButton = styled(Button)`
+const StyledButton = styled.button`
     font-size: 32px;
     font-family: Helvetica;
     border: none;
     border-radius: 15px;
+    color: white;
 `;
 
 const LoginButton = styled(StyledButton)`
@@ -55,6 +55,6 @@ export default function Landing(props) {
                 <SignUpButton onClick={signup}>Sign Up</SignUpButton>
             </ButtonDiv>
         </div>
-      );
+    );
     
 }
