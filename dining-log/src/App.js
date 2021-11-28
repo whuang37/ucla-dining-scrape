@@ -12,7 +12,6 @@ import Edit from "./components/edit";
 import Create from "./components/create";
 import RecordList from "./components/recordList";
 
-
 export default class App extends React.Component {
   constructor(props) {
     super(props);
