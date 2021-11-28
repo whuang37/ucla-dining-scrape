@@ -1,9 +1,8 @@
 import React, { useState} from 'react';
-import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
-import './Login.css';
+import './SignUp.css';
 
- async function loginUser(credentials) {
-    return fetch('http://localhost:8080/login', {
+ async function signUpUser(credentials) {
+    return fetch('http://localhost:8080/signup', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -13,45 +12,36 @@ import './Login.css';
       .then(data => data.json())
    }
 
-export default function Login(props) {
+export default function SignUp(props) {
   const [username, setUserName] = useState();
   const [password, setPassword] = useState();
   const [submit, setSubmit] = useState();
-  const [wrongPass, setWrongPass] = useState();
   const handleSubmit = async e => {
     e.preventDefault();
 
-    const token = await loginUser({
+    const token = await signUpUser({
       username,
       password
     });
     
 
-    fetch('http://localhost:8080/auth')
+    fetch('http://localhost:8080/signedup')
   .then(response => response.json())
-  .then(data => {  if(data.response == 'authorized')
-                                      setSubmit(true);
-                                    else
-                                    {
-                                      setSubmit(false);
-                                      setWrongPass(data.response);
-                                    }});
+  .then(data => {setSubmit(data.response)});
     
   }
 
   let responseText;
   const renderResponseText = () => {
-    if (wrongPass == 'failed') {
-      return <h6 style={{ color: 'red' }}>Wrong Password</h6>;
-    } else if (wrongPass == 'new'){
-      return  <h6 style={{ color: 'red' }}>No account found</h6>;
+    if (submit == 'success') {
+      return <h6 style={{ color: 'green' }}>Account created successfully</h6>;
+    } else if (submit == 'failed'){
+      return  <h6 style={{ color: 'red' }}>Account already exists</h6>;
     }
   }
-  if(!submit)
-  {
     return(
-      <div className="login-wrapper">
-        <h1>Please Log In</h1>
+      <div className="signup-wrapper">
+        <h1>Please Sign Up</h1>
         {renderResponseText()}
         <form onSubmit={handleSubmit}>
           <label>
@@ -68,9 +58,4 @@ export default function Login(props) {
         </form>
       </div>
     )
-  }
-  else
-  {
-    return <Navigate to="/dashboard" />
-  }
 }
