@@ -13,6 +13,16 @@ import Landing from "./components/Landing/Landing";
 export default class App extends React.Component {
   constructor(props) {
     super(props);
+    this.setUsername.bind(this);
+    this.state = {
+      username: ""
+    }
+  }
+
+  setUsername = (un) => {
+    this.setState({
+        username: un
+    });
   }
 
   render (){
@@ -23,10 +33,10 @@ export default class App extends React.Component {
         <Routes>
           <Route path="/" element={<Landing />} />
           <Route path="/signup" element={<SignUp />} />
-          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/dashboard" element={<Dashboard un={this.state.username}/>} />
           <Route path="/preferences" element={<Preferences />} />
           <Route path="/foodpage" element={<FoodPage />} />
-          <Route path="/login" element={<Login />} />
+          <Route path="/login" element={<Login setUsername = {this.setUsername}/>} />
         </Routes>
       </BrowserRouter>
     </div>);

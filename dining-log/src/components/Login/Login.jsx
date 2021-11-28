@@ -1,6 +1,6 @@
 import React, { useState} from 'react';
 import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
-import './Login.css';
+import styles from './Login.module.css';
 
  async function loginUser(credentials) {
     return fetch('http://localhost:8080/login', {
@@ -29,8 +29,9 @@ export default function Login(props) {
 
     fetch('http://localhost:8080/auth')
   .then(response => response.json())
-  .then(data => {  if(data.response == 'authorized')
-                                      setSubmit(true);
+  .then(data => {  if(data.response == 'authorized') {
+                                      setSubmit(true); 
+                                    }
                                     else
                                     {
                                       setSubmit(false);
@@ -42,30 +43,34 @@ export default function Login(props) {
   let responseText;
   const renderResponseText = () => {
     if (wrongPass == 'failed') {
-      return <h6 style={{ color: 'red' }}>Wrong Password</h6>;
+      return <div class={styles.loginMessage}>Wrong Password</div>;
     } else if (wrongPass == 'new'){
-      return  <h6 style={{ color: 'red' }}>No account found</h6>;
+      return <div class={styles.loginMessage}>No account found</div>;
     }
+  }
+  const handleUsername = (e) => {
+    setUserName(e.target.value); 
+    {props.setUsername(e.target.value)};
   }
   if(!submit)
   {
     return(
-      <div className="login-wrapper">
-        <h1>Please Log In</h1>
+      <div>
+        <h1>Log In</h1>
         {renderResponseText()}
-        <form onSubmit={handleSubmit}>
-          <label>
-            <p>Username</p>
-            <input type="text" onChange={e => setUserName(e.target.value)}/>
-          </label>
-          <label>
-            <p>Password</p>
-            <input type="password" onChange={e => setPassword(e.target.value)}/>
-          </label>
-          <div>
-            <button type="submit">Submit</button>
-          </div>
-        </form>
+        <div class={styles.formWrapper}>
+          <form onSubmit={handleSubmit}>
+            <label>
+              <input class={styles.loginInput} type="text" placeholder="Email" onChange={handleUsername} required/>
+            </label>
+            <br/>
+            <label>
+              <input class={styles.loginInput} type="password" placeholder="Password" onChange={e => setPassword(e.target.value)} required/>
+            </label>
+            <br/>
+            <button class={styles.loginSubmit}type="submit">Submit</button>
+          </form>
+        </div>
       </div>
     )
   }
