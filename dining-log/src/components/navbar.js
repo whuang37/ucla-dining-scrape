@@ -24,9 +24,9 @@ export default function NavBar(props) {
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                 <StyledNav>
-                    <Nav.Link href="dashboard">Your Profile</Nav.Link>
-                    <Nav.Link href="history">Eating History</Nav.Link>
-                    <Nav.Link href="logger">Meal Logger and Planner</Nav.Link>
+                    <Nav.Link to="/dashboard">Your Profile</Nav.Link>
+                    <Nav.Link to="/history">Eating History</Nav.Link>
+                    <Nav.Link to="/logger">Meal Logger and Planner</Nav.Link>
                 </StyledNav>
                 </Navbar.Collapse>
             </NavContainer>

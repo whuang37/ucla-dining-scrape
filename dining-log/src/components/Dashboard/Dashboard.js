@@ -11,12 +11,11 @@ padding: 25px;
 `;
 
 const Image = styled.div`
-  height: 100%;
   object-fit: cover;
-  background-image: url(${(props) => props.image});
+  background-image: url(https://pbs.twimg.com/profile_images/974674764575866880/MwF1DQZ-_400x400.jpg);
   background-position: center;
   background-size: cover;
-  width: 75%;
+  width: 80%;
   height: 200%;
 `;
 
@@ -47,10 +46,10 @@ export default function Dashboard({un}) {
     .then(data => {}); */
   return(
       <div>
-        <NavBar></NavBar>
+        <NavBar/>
         <h2>Your Profile</h2>
         <ProfileDiv> 
-          {/* <Image image = {image}/> */}
+          <Image> </Image>
           <TextDiv>
             <h3> <strong>{un}</strong> </h3>
             <h3> <strong>Dietary Restrictions:</strong> {dietaryRestrictions} </h3>
