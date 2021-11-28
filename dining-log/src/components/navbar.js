@@ -16,7 +16,7 @@ const StyledNav = styled(Nav)`
     padding-left: 75px; 
 `;
 
-export default function Landing(props) {
+export default function NavBar(props) {
     return (
         <Navbar expand="lg">
             <NavContainer>
