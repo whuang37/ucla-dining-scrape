@@ -5,6 +5,13 @@ require("dotenv").config({ path: "./config.env" });
 const port = process.env.PORT || 5000;
 app.use(cors());
 
+const { MongoClient } = require("mongodb");
+// Connection URI
+const uri =
+  "mongodb+srv://rohan_sri:mongodb@cluster0.pbiwr.mongodb.net/?retryWrites=true&w=majority";
+// Create a new MongoClient
+const client = new MongoClient(uri);
+
 app.use('/login', (req, res) => {
   res.send({
     token: 'test123'

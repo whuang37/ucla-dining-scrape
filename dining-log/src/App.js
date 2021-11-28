@@ -15,7 +15,7 @@ function App() {
   const [token, setToken] = useState();
   if(!token) {
     // return <Login setToken={setToken} />
-    return <NewUser></NewUser>
+    return <Dashboard name = "Student" dietaryRestrictions = "vegan" calories = "2000" image = "https://1000logos.net/wp-content/uploads/2017/11/Logo-UCLA.jpg"></Dashboard>
   }
   return (
     <div className="wrapper">
