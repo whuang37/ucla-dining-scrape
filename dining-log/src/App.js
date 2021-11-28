@@ -10,7 +10,6 @@ import FoodPage from "./components/FoodRecs/FoodPage";
 import Landing from "./components/Landing/Landing";
 
 
-
 export default class App extends React.Component {
   constructor(props) {
     super(props);
