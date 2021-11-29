@@ -101,14 +101,40 @@ app.post('/foodfilter', async (req1, res) => {
   const query = {
   };
 
+  const foods = 
+  [{
+      "name": "Salad",
+      "allergens": "soy, dairy, nuts",
+      "calories": 218 },
+  {
+      "name": "Brown rice",
+      "allergens": "gluten",
+      "calories": 175 },
+  {
+      "name": "Egg Whites Omelet",
+      "allergens": "eggs",
+      "calories": 174 },
+  {
+      "name": "Prosciutto Sandwich",
+      "allergens": "gluten",
+      "calories": 800 },
+  {
+      "name": "Grilled Chicken",
+      "calories": 112 },
+  {
+      "name": "Blueberry Topping",
+      "calories": 41 }
+  ]
+
+
   const req = {
     body: {
       meal: "breakfast",
       hall: "bplate",
       username: "rohan",
-      selectedFoods: [],
-      allergens: false,
-      calories: false}
+      selectedFoods: foods,
+      allergens: true,
+      calories: true}
   };
 
   if (req.body.meal == ''){
@@ -129,31 +155,39 @@ app.post('/foodfilter', async (req1, res) => {
 
   var selected_calories = 0;
   selected_calories = req.body.selectedFoods.reduce((partial_sum, a) => partial_sum + a["calories"], 0);
+  console.log(selected_calories);
 
   var user_cursor = client.db("diningLog").collection('profiles').find({
     username: req.body.username
-  });
+  }); 
 
   var calorie_limit;
   query.allergens = {$nin: []};
 
+  
+
   function getInfo(doc){
     // if the user has selected to filter by allergens
+    console.log(req.body.allergens);
     if (req.body.allergens){
       query.allergens = {$nin: doc.allergens};
     } 
     calorie_limit = doc.calories;
   }
 
+  await user_cursor.forEach(getInfo);
+
+
   // if the user has selected to filter by calories
   if (req.body.calories){
     let calorie_query = calorie_limit - selected_calories;
+    console.log(calorie_query);
     query.calories = { $lt: calorie_query};
   } else {
     query.calories = {$exists: true};
   }
 
-  user_cursor.forEach(getInfo);
+  
 
   console.log(query);
 
