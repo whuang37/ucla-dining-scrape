@@ -36,7 +36,7 @@ export default function SignUp(props) {
     if (submit == 'success') {
       return <div class={styles.signupSuccess}> Account created successfully, now <Link to="/login">Sign in</Link> </div>;
     } else if (submit == 'failed'){
-      return  <div class={styles.signupError}>Account already exists</div>;
+      return  <div class={styles.signupError}>Account already exists, <Link to="/login">Sign in</Link></div>;
     }
   }
     return(

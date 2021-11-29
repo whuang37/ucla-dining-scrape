@@ -6,12 +6,7 @@ export default function Page(props) {
     return (
         <div>
             <NavBar/>
-            <FilteredList/>
-            <div>
-                <p>Meal Calories: </p>
-                <p>Remaining Daily Calories: </p>
-                <button class={styles.button}>Log Meal</button>
-            </div>
+            <FilteredList dailyCalories={props.dailyCalories} />
         </div>
     )
 }

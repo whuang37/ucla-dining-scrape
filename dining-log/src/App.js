@@ -13,6 +13,8 @@ export default class App extends React.Component {
     super(props);
   }
 
+// need to get user's dailyCalories as a prop for FoodPage
+
   render (){
     return(
     <div className="wrapper">
@@ -22,7 +24,7 @@ export default class App extends React.Component {
           <Route path="/signup" element={<SignUp />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/preferences" element={<Preferences />} />
-          <Route path="/foodpage" element={<FoodPage />} />
+          <Route path="/foodpage" element={<FoodPage dailyCalories={2000}/>} />
           <Route path="/login" element={<Login />} />
         </Routes>
       </BrowserRouter>

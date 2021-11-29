@@ -53,6 +53,7 @@ export default class Filter extends React.Component {
             calories: false,
             selectedFoods: [],
             displayFoods: [],   //displayFoods = data.response + selectedFoods
+            total: 0
         };
     } 
     
@@ -60,9 +61,9 @@ export default class Filter extends React.Component {
     setSelected=(food, selected)=>{
         // add food to selectedList if checkbox is checked
         if (selected)
-            this.setState({
-                selectedFoods: [...this.state.selectedFoods, food]
-            }, () => console.log(this.state.selectedFoods));
+            this.setState((state)=>({
+                selectedFoods: [...state.selectedFoods, food]
+            }), () => console.log(this.state.selectedFoods));
         // remove food from list if checkbox got unchecked
         else
         {
@@ -76,6 +77,13 @@ export default class Filter extends React.Component {
                 }, () => console.log(this.state.selectedFoods));
             }
         }
+        this.calculateCalories();
+    }
+
+    calculateCalories=()=>{
+        this.setState((state)=>({
+            total: state.selectedFoods.reduce((a,v) =>  a = a + v.calories, 0),
+        }));
     }
 
     // object {name, allergens, calories}
@@ -153,7 +161,12 @@ export default class Filter extends React.Component {
     
                 {/* props should be display={displayFoods} and selected={selectedFoods} */}
                 <FoodList meal={this.state.meal} hall={this.state.hall} display={foods} selected={this.state.selectedFoods} setSelected={this.setSelected}/>
-                
+
+                <div>
+                    <p>Meal Calories: {this.state.total} </p>
+                    <p>Remaining Daily Calories: {this.props.dailyCalories - this.state.total} </p>
+                    <button class={styles.button}>Log Meal</button>
+                </div>
             </div>
         )
     }
