@@ -15,32 +15,6 @@ async function getFoods(filters) {
     .then(data => data.json())
 }
 
-// tester array
-const foods = 
-[{
-    "name": "Salad",
-    "allergens": "soy, dairy, nuts",
-    "calories": 218 },
-{
-    "name": "Brown rice",
-    "allergens": "gluten",
-    "calories": 175 },
-{
-    "name": "Egg Whites Omelet",
-    "allergens": "eggs",
-    "calories": 174 },
-{
-    "name": "Prosciutto Sandwich",
-    "allergens": "gluten",
-    "calories": 800 },
-{
-    "name": "Grilled Chicken",
-    "calories": 112 },
-{
-    "name": "Blueberry Topping",
-    "calories": 41 }
-]
-
 export default class Filter extends React.Component {
     constructor(props) {
         super(props);
@@ -81,11 +55,14 @@ export default class Filter extends React.Component {
                 .then(response => response.json())
                 .then(data => {
                     this.setState({
-                        displayFoods: data.foods
+                        displayFoods: data.foods 
                     }) 
                 });
+            
+            this.mergeFoods();
         }
     }
+    
 
     async middle() {
         await getFoods({
@@ -125,6 +102,22 @@ export default class Filter extends React.Component {
         this.setState((state)=>({
             total: state.selectedFoods.reduce((a,v) =>  a = a + v.calories, 0),
         }));
+    }
+
+    mergeFoods() {
+        let display = this.state.displayFoods
+        let selected = this.state.selectedFoods
+        for(var i = 0, l = display.length; i < l; i++) {
+            for(var j = 0, ll = selected.length; j < ll; j++) {
+                if(display[i].name === selected[j].name) {
+                    display.splice(i, 1, selected[j]);
+                    break;
+                }
+            }
+        }
+        this.setState({
+            displayFoods: display 
+        }) 
     }
 
     render() {

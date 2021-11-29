@@ -2,10 +2,6 @@ import React from "react";
 import styled from "styled-components";
 import FoodItem from "./FoodItem";
 
-// get list of all foods from the hall assigned to props.hall
-// display all foods (props.list.name, props.list.allergens, props.list.calories)
-// loop through array of all foods
-
 const Header = styled.div`
     font-family: Helvetica;
     text-align: center;
@@ -28,18 +24,9 @@ const Container = styled.div`
 
 // props = meal, hall, display {name, allergens, calories}
 export default function List(props) {
-    // const handleAllergens = (allergenList) => {
-    //     console.log(allergenList)
-    //     allergenList.map(function(allergen){
-    //         return <span> {allergen} + {","} </span>;
-    //     })
-    // } 
-
     const foodList = props.display.map(function(foods){
-        console.log(typeof foods.allergens)
-        console.log(foods.allergens)
         let allergens;
-        if (foods.allergens == undefined)
+        if (foods.allergens === undefined)
             allergens = []
         else 
             allergens = Object.values(foods.allergens)
