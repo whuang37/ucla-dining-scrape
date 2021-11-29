@@ -9,6 +9,7 @@ app.use(express.json());
 app.use(require("./routes/record"));
 
 const { MongoClient } = require("mongodb");
+const { application } = require("express");
 // Connection URI
 const uri =
   "mongodb+srv://rohan_sri:mongodb@cluster0.pbiwr.mongodb.net/?retryWrites=true&w=majority";
@@ -21,6 +22,11 @@ app.get('/auth', function(req, res){
 
 app.get('/signedup', function(req, res){
   res.send({response:app.get('su')});
+});
+
+app.get('/query', function(req, res){
+  console.log(JSON.stringify(app.get('query_result'), null, 4));
+  res.send(app.get('query_result'));
 });
 
 app.post('/signup', async (req, res) => {
@@ -58,8 +64,7 @@ app.post('/login', async (req, res) => {
 
 
   const cursor = users.find({username: req.body.username})
-
-
+  
   const user = cursor.next();
   user.then((u) => {
       if(u)
@@ -88,20 +93,23 @@ app.post('/login', async (req, res) => {
 
 
 
-app.post('/foodfilter', async (req, res) => {
+app.post('/foodfilter', async (req1, res) => {
   await client.connect();
-
+  console.log('AM I BEING USED');
   const users = client.db("diningLog").collection('users');
 
   const query = {
   };
 
-  // const req = {
-  //   meal = "breakfast",
-  //   hall = "bplate",
-  //   username = "test",
-
-  // };
+  const req = {
+    body: {
+      meal: "breakfast",
+      hall: "bplate",
+      username: "rohan",
+      selectedFoods: [],
+      allergens: false,
+      calories: false}
+  };
 
   if (req.body.meal == ''){
     query.meal = {$exists: true}
@@ -127,47 +135,43 @@ app.post('/foodfilter', async (req, res) => {
   });
 
   var calorie_limit;
-  query.allergens = [];
+  query.allergens = {$nin: []};
 
   function getInfo(doc){
     // if the user has selected to filter by allergens
     if (req.body.allergens){
-      query.allergens = doc.allergens;
+      query.allergens = {$nin: doc.allergens};
     } 
-    calorie_limit = doc.calorie_limit;
+    calorie_limit = doc.calories;
   }
 
   // if the user has selected to filter by calories
   if (req.body.calories){
-    query.calories = calorie_limit - selected_calories;
+    let calorie_query = calorie_limit - selected_calories;
+    query.calories = { $lt: calorie_query};
   } else {
     query.calories = {$exists: true};
   }
 
-  user_cursor.forEach(getInfo, errorFunc);
+  user_cursor.forEach(getInfo);
 
-  var cursor = client.db("diningLog").collection('food').find({ 
-    meal: query.meal,
-    allergens: {$nin: query.allergens},
-    calories: { $lt: query.calories },
-    hall: query.hall
-  });
+  console.log(query);
 
-  function iterateFunc(doc) {
-    console.log(JSON.stringify(doc, null, 4));
-  }
- 
-  function errorFunc(error) {
-    console.log(error);
-  }
+  var cursor = client.db("diningLog").collection('food').find(query);
 
-  cursor.forEach(iterateFunc, errorFunc);
+  // app.set('query_result', {foods: []});
 
-  });
+  cursor.toArray().then((data) => {app.set('query_result', {foods:data}); res.redirect('/query');});
 
+});
+
+
+
+
+  
 app.listen(8080, async() => {
   console.log(`Server is running on port: ${port}`);
-  console.log('API is running on http://localhost:8080/login')
+  console.log('API is running on http://localhost:8080/login');
 
   await client.connect();
 
@@ -184,13 +188,16 @@ app.listen(8080, async() => {
     username: "test"
   });
 
-  var password;
+  var password = "did not work";
 
   user_cursor.forEach(getInfo, errorFunc);
+
+  app.set('test', 'no');
 
   function getInfo(doc){
     // console.log(JSON.stringify(doc, ["password"], 4));
     password = doc.password;
+    app.set('test', 'yo');
     console.log(password);
   }
   
@@ -204,4 +211,6 @@ app.listen(8080, async() => {
   }
 
   // cursor.forEach(iterateFunc, errorFunc);
+  console.log(app.get('test'));
+  
 });
