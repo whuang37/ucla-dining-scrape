@@ -129,13 +129,37 @@ app.post('/foodfilter', async (req1, res) => {
 
   const req = {
     body: {
-      meal: "breakfast",
-      hall: "bplate",
+      meal: "Breakfast",
+      hall: "Bruin Plate",
       username: "rohan",
       selectedFoods: foods,
       allergens: true,
       calories: true}
   };
+
+  if (req.body.meal == "Breakfast"){
+    req.body.meal = "breakfast";
+  }
+
+  if (req.body.meal == "Lunch"){
+    req.body.meal = "lunch";
+  }
+
+  if (req.body.meal == "Dinner"){
+    req.body.meal = "dinner";
+  }
+
+  if (req.body.hall == "Bruin Plate"){
+    req.body.hall = "bplate";
+  }
+
+  if (req.body.hall == "De Neve"){
+    req.body.hall = "de_neve";
+  }
+
+  if (req.body.hall == "Epicuria"){
+    req.body.hall = "epicuria";
+  }
 
   if (req.body.meal == ''){
     query.meal = {$exists: true}
