@@ -26,11 +26,27 @@ const Container = styled.div`
     padding-top: 1%;
 `;
 
-// props = meal, hall, array of food objects {name, allergens, calories}
+// props = meal, hall, display {name, allergens, calories}
 export default function List(props) {
+    // const handleAllergens = (allergenList) => {
+    //     console.log(allergenList)
+    //     allergenList.map(function(allergen){
+    //         return <span> {allergen} + {","} </span>;
+    //     })
+    // } 
+
     const foodList = props.display.map(function(foods){
-        return <div> <FoodItem name={foods.name} allergens={foods.allergens} calories={foods.calories} 
-                        setSelected={props.setSelected}/> </div>;
+        console.log(typeof foods.allergens)
+        console.log(foods.allergens)
+        let allergens;
+        if (foods.allergens == undefined)
+            allergens = []
+        else 
+            allergens = Object.values(foods.allergens)
+
+        return <div> 
+            <FoodItem name={foods.name} allergens={allergens.join(", ")} calories={foods.calories} setSelected={props.setSelected}/> 
+        </div>;
     })
 
     return (

@@ -80,7 +80,6 @@ export default class Filter extends React.Component {
             fetch('http://localhost:8080/query')
                 .then(response => response.json())
                 .then(data => {
-                    console.log(data.foods)
                     this.setState({
                         displayFoods: data.foods
                     }) 
