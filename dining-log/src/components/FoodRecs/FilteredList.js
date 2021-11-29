@@ -4,16 +4,16 @@ import styles from "./Page.module.css";
 import FoodList from "./FoodList";
 
 // TODO: get link to fetch from
-// async function filter(credentials) {
-//     return fetch('http://localhost:8080/filter', {
-//     method: 'POST',
-//     headers: {
-//         'Content-Type': 'application/json'
-//     },
-//     body: JSON.stringify(credentials)
-//     })
-//     .then(data => data.json())
-// }
+async function getFoods(filters) {
+    return fetch('http://localhost:8080/foodfilter', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(filters)
+    })
+    .then(data => data.json())
+}
 
 // tester array
 const foods = 
@@ -41,21 +41,63 @@ const foods =
     "calories": 41 }
 ]
 
-
 export default class Filter extends React.Component {
     constructor(props) {
         super(props);
         this.setSelected.bind(this);
+        this.middle.bind(this);
         this.state = {
             meal: 'Meal',
             hall: 'Dining Hall',
             allergens: false,
             calories: false,
             selectedFoods: [],
-            displayFoods: [],   //displayFoods = data.response + selectedFoods
+            displayFoods: [],   //displayFoods = data.foods + selectedFoods
             total: 0
         };
     } 
+
+    componentDidMount() {
+        this.middle();
+      
+        fetch('http://localhost:8080/query')
+            .then(response => response.json())
+            .then(data => {
+                this.setState({
+                    displayFoods: data.foods
+                }) 
+            });
+    }
+
+
+    async componentDidUpdate(prevProps, prevState){
+        if (this.state.meal !== prevState.meal || this.state.hall !== prevState.hall || this.state.allergens !== prevState.allergens 
+            || this.state.calories !== prevState.calories 
+            || JSON.stringify(this.state.selectedFoods) !== JSON.stringify(prevState.selectedFoods)) 
+        {
+            await this.middle();
+          
+            fetch('http://localhost:8080/query')
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data.foods)
+                    this.setState({
+                        displayFoods: data.foods
+                    }) 
+                });
+        }
+    }
+
+    async middle() {
+        await getFoods({
+            meal: this.state.meal,
+            hall: this.state.hall,
+            username: this.props.username,
+            selectedFoods: this.state.selectedFoods,
+            allergens: this.state.allergens,
+            calories: this.state.calories,
+        }) 
+    }
     
     // callback function to add foodItem to array of selectedFoods: pass function to foodlist --> fooditem as a prop, call callback function from foodItem with food object as argument to add it to the array of selectedFoods
     setSelected=(food, selected)=>{
@@ -85,27 +127,6 @@ export default class Filter extends React.Component {
             total: state.selectedFoods.reduce((a,v) =>  a = a + v.calories, 0),
         }));
     }
-
-    // object {name, allergens, calories}
-    
-    // handleChange = async e => {
-    //     e.preventDefault();
-    
-    //     const token = await filter({
-    //       meal: this.state.meal,
-    //       hall: this.state.hall,
-    //       allergens: this.state.allergens,
-    //       calories: this.state.calories,
-    //       selectedFoods: this.state.selectedFoods
-    //     });
-
-    //     // TODO: get link to fetch from
-    //     fetch('http://localhost:8080/auth')
-    //     .then(response => response.json())
-    //     .then(data => {
-    //         // TODO: fill this part in 
-    //     });
-    // }
 
     render() {
         return (
@@ -159,8 +180,7 @@ export default class Filter extends React.Component {
                     <button class={styles.button} type="submit">Find Food</button>
                 </div>
     
-                {/* props should be display={displayFoods} and selected={selectedFoods} */}
-                <FoodList meal={this.state.meal} hall={this.state.hall} display={foods} selected={this.state.selectedFoods} setSelected={this.setSelected}/>
+                <FoodList meal={this.state.meal} hall={this.state.hall} display={this.state.displayFoods} selected={this.state.selectedFoods} setSelected={this.setSelected}/>
 
                 <div>
                     <p>Meal Calories: {this.state.total} </p>

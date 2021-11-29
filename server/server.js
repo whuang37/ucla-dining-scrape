@@ -34,7 +34,6 @@ app.post('/signup', async (req, res) => {
 
   const users = client.db("diningLog").collection('users');
 
-
   const cursor = users.find({username: req.body.username})
 
   const user = cursor.next();
@@ -61,7 +60,6 @@ app.post('/login', async (req, res) => {
   await client.connect();
 
   const users = client.db("diningLog").collection('users');
-
 
   const cursor = users.find({username: req.body.username})
   
@@ -92,49 +90,12 @@ app.post('/login', async (req, res) => {
 
 
 
-
-app.post('/foodfilter', async (req1, res) => {
+app.post('/foodfilter', async (req, res) => {
   await client.connect();
   //console.log('AM I BEING USED');
   const users = client.db("diningLog").collection('users');
 
   const query = {
-  };
-
-  const foods = 
-  [{
-      "name": "Salad",
-      "allergens": "soy, dairy, nuts",
-      "calories": 218 },
-  {
-      "name": "Brown rice",
-      "allergens": "gluten",
-      "calories": 175 },
-  {
-      "name": "Egg Whites Omelet",
-      "allergens": "eggs",
-      "calories": 174 },
-  {
-      "name": "Prosciutto Sandwich",
-      "allergens": "gluten",
-      "calories": 800 },
-  {
-      "name": "Grilled Chicken",
-      "calories": 112 },
-  {
-      "name": "Blueberry Topping",
-      "calories": 41 }
-  ]
-
-
-  const req = {
-    body: {
-      meal: "Breakfast",
-      hall: "Bruin Plate",
-      username: "rohan",
-      selectedFoods: foods,
-      allergens: true,
-      calories: true}
   };
 
   if (req.body.meal == "Breakfast"){
@@ -188,8 +149,6 @@ app.post('/foodfilter', async (req1, res) => {
   var calorie_limit;
   query.allergens = {$nin: []};
 
-  
-
   function getInfo(doc){
     // if the user has selected to filter by allergens
     console.log(req.body.allergens);
@@ -201,7 +160,6 @@ app.post('/foodfilter', async (req1, res) => {
 
   await user_cursor.forEach(getInfo);
 
-
   // if the user has selected to filter by calories
   if (req.body.calories){
     let calorie_query = calorie_limit - selected_calories;
@@ -211,18 +169,13 @@ app.post('/foodfilter', async (req1, res) => {
     query.calories = {$exists: true};
   }
 
-  
-
   console.log(query);
 
   var cursor = client.db("diningLog").collection('food').find(query);
 
-  // app.set('query_result', {foods: []});
-
   cursor.toArray().then((data) => {app.set('query_result', {foods:data}); res.redirect('/query');});
 
 });
-
 
 
 
