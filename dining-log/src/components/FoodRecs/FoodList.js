@@ -30,7 +30,7 @@ const Container = styled.div`
 export default function List(props) {
     const foodList = props.display.map(function(foods){
         return <div> <FoodItem name={foods.name} allergens={foods.allergens} calories={foods.calories} 
-                        update={props.updateSelected}/> </div>;
+                        setSelected={props.setSelected}/> </div>;
     })
 
     return (

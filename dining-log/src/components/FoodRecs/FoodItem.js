@@ -18,9 +18,10 @@ const Information = styled.div`
 export default function Item(props) {
     const [checked, setChecked] = useState(false);
 
-    const handleChecked=(e)=>{
-        setChecked(e);
-        {props.update(e)}
+    const handleChecked=()=>{
+        setChecked(!checked);
+        const food = {name: props.name, allergens: props.allergens, calories: props.calories};
+        props.setSelected(food, !checked);
     }
 
     return (
