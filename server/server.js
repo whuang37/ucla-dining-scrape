@@ -95,7 +95,7 @@ app.post('/login', async (req, res) => {
 
 app.post('/foodfilter', async (req1, res) => {
   await client.connect();
-  console.log('AM I BEING USED');
+  //console.log('AM I BEING USED');
   const users = client.db("diningLog").collection('users');
 
   const query = {
