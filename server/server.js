@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 require("dotenv").config({ path: "./config.env" });
+const port = process.env.PORT || 5000;
 app.use(cors());
 
 app.use(express.json());
@@ -84,7 +85,123 @@ app.post('/login', async (req, res) => {
 
 });
 
-app.listen(8080, () => {
-  console.log(`Server is running on port: 8080`);
-  console.log('API is running on http://localhost:8080')
+
+
+
+app.post('/foodfilter', async (req, res) => {
+  await client.connect();
+
+  const users = client.db("diningLog").collection('users');
+
+  const query = {
+  };
+
+  // const req = {
+  //   meal = "breakfast",
+  //   hall = "bplate",
+  //   username = "test",
+
+  // };
+
+  if (req.body.meal == ''){
+    query.meal = {$exists: true}
+  }
+
+  if (req.body.hall == ''){
+    query.hall = {$exists: true}
+  }
+
+  if (req.body.meal != ''){
+    query.meal = req.body.meal;
+  }
+
+  if (req.body.hall != ''){
+    query.hall = req.body.hall;
+  }
+
+  var selected_calories = 0;
+  selected_calories = req.body.selectedFoods.reduce((partial_sum, a) => partial_sum + a["calories"], 0);
+
+  var user_cursor = client.db("diningLog").collection('profiles').find({
+    username: req.body.username
+  });
+
+  var calorie_limit;
+  query.allergens = [];
+
+  function getInfo(doc){
+    // if the user has selected to filter by allergens
+    if (req.body.allergens){
+      query.allergens = doc.allergens;
+    } 
+    calorie_limit = doc.calorie_limit;
+  }
+
+  // if the user has selected to filter by calories
+  if (req.body.calories){
+    query.calories = calorie_limit - selected_calories;
+  } else {
+    query.calories = {$exists: true};
+  }
+
+  user_cursor.forEach(getInfo, errorFunc);
+
+  var cursor = client.db("diningLog").collection('food').find({ 
+    meal: query.meal,
+    allergens: {$nin: query.allergens},
+    calories: { $lt: query.calories },
+    hall: query.hall
+  });
+
+  function iterateFunc(doc) {
+    console.log(JSON.stringify(doc, null, 4));
+  }
+ 
+  function errorFunc(error) {
+    console.log(error);
+  }
+
+  cursor.forEach(iterateFunc, errorFunc);
+
+  });
+
+app.listen(8080, async() => {
+  console.log(`Server is running on port: ${port}`);
+  console.log('API is running on http://localhost:8080/login')
+
+  await client.connect();
+
+  const meal = "dinner";
+
+  var cursor = client.db("diningLog").collection('food').find({ 
+    meal: meal,
+    allergens: {$nin: []},
+    calories: { $lt: 300 },
+    hall: "de_neve"
+  });
+
+  var user_cursor = client.db("diningLog").collection('users').find({
+    username: "test"
+  });
+
+  var password;
+
+  user_cursor.forEach(getInfo, errorFunc);
+
+  function getInfo(doc){
+    // console.log(JSON.stringify(doc, ["password"], 4));
+    password = doc.password;
+    console.log(password);
+  }
+  
+
+  // function iterateFunc(doc) {
+  //   console.log(JSON.stringify(doc, null, 4));
+  // }
+ 
+  function errorFunc(error) {
+    console.log(error);
+  }
+
+  // cursor.forEach(iterateFunc, errorFunc);
 });
