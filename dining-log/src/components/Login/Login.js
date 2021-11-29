@@ -1,6 +1,7 @@
 import React, { useState} from 'react';
 import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
 import styles from './Login.module.css';
+import BackToLanding from '../backToLanding.js'
 
 async function loginUser(credentials) {
     return fetch('http://localhost:8080/login', {
@@ -52,6 +53,7 @@ export default function Login(props) {
   {
     return(
       <div>
+        <BackToLanding/>
         <h1>Log In</h1>
         {renderResponseText()}
         <div class={styles.formWrapper}>

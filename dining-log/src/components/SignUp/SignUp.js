@@ -1,5 +1,6 @@
 import React, { useState} from 'react';
 import styles from './SignUp.module.css';
+import BackToLanding from '../backToLanding.js'
 
  async function signUpUser(credentials) {
     return fetch('http://localhost:8080/signup', {
@@ -41,6 +42,7 @@ export default function SignUp(props) {
   }
     return(
       <div>
+        <BackToLanding/>
         <h1>Sign Up</h1>
         {renderResponseText()}
         <div class={styles.signupWrapper}>
