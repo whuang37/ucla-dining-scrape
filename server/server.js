@@ -202,11 +202,7 @@ app.post('/foodfilter', async (req, res) => {
 
   var cursor = client.db("diningLog").collection('food').find(query);
 
-<<<<<<< HEAD
-  cursor.toArray().then((data) => {app.set('query_result', {usercalories: calorie_query,foods:data}); res.redirect('/query');});
-=======
   cursor.toArray().then((data) => {app.set('query_result', {usercalories:calorie_limit, foods:data}); res.redirect('/query');});
->>>>>>> fe30e7fdec44187f81a9241ec947cb8127bae30e
 
 });
 
