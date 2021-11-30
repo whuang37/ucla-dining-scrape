@@ -50,7 +50,6 @@ app.post('/signup', async (req, res) => {
           if(err) return console.log(err);
           
         });
-
         users.insertOne({username: req.body.username, password: req.body.password}, (err, data) => {
           if(err) return console.log(err);
           
@@ -202,11 +201,7 @@ app.post('/foodfilter', async (req, res) => {
 
   var cursor = client.db("diningLog").collection('food').find(query);
 
-<<<<<<< HEAD
-  cursor.toArray().then((data) => {app.set('query_result', {usercalories: calorie_query,foods:data}); res.redirect('/query');});
-=======
   cursor.toArray().then((data) => {app.set('query_result', {usercalories:calorie_limit, foods:data}); res.redirect('/query');});
->>>>>>> fe30e7fdec44187f81a9241ec947cb8127bae30e
 
 });
 
