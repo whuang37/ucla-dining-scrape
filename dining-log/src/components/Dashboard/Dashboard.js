@@ -41,7 +41,6 @@ export default function Dashboard() {
   const [user, setUsername] = useState();
   useEffect(() => {
     setUsername(sessionStorage.getItem('username'));
-
     async function middle(){
       await sendUserData({username:user});
       fetch('http://localhost:8080/profile')

@@ -25,7 +25,7 @@ app.get('/signedup', function(req, res){
 });
 
 app.get('/query', function(req, res){
-  console.log(JSON.stringify(app.get('query_result'), null, 4));
+  // console.log(JSON.stringify(app.get('query_result'), null, 4));
   res.send(app.get('query_result'));
 });
 
@@ -112,7 +112,7 @@ app.post('/user', async (req, res) => {
       app.set('profile', {allergens: u.allergens, calories: u.calories});
       res.redirect('/profile');
     }
-    });
+  });
 });
 
 
@@ -166,7 +166,7 @@ app.post('/foodfilter', async (req, res) => {
 
   var selected_calories = 0;
   selected_calories = req.body.selectedFoods.reduce((partial_sum, a) => partial_sum + a["calories"], 0);
-  console.log(selected_calories);
+  // console.log(selected_calories);
 
   var user_cursor = client.db("diningLog").collection('profiles').find({
     username: req.body.username
@@ -177,7 +177,7 @@ app.post('/foodfilter', async (req, res) => {
 
   function getInfo(doc){
     // if the user has selected to filter by allergens
-    console.log(req.body.allergens);
+    // console.log(req.body.allergens);
     if (req.body.allergens){
       query.allergens = {$nin: doc.allergens};
     } 
@@ -187,19 +187,20 @@ app.post('/foodfilter', async (req, res) => {
   await user_cursor.forEach(getInfo);
 
   // if the user has selected to filter by calories
+  
   if (req.body.calories){
     let calorie_query = calorie_limit - selected_calories;
-    console.log(calorie_query);
+    // console.log(calorie_query);
     query.calories = { $lt: calorie_query};
   } else {
     query.calories = {$exists: true};
   }
 
-  console.log(query);
+  // console.log(query);
 
   var cursor = client.db("diningLog").collection('food').find(query);
 
-  cursor.toArray().then((data) => {app.set('query_result', {foods:data}); res.redirect('/query');});
+  cursor.toArray().then((data) => {app.set('query_result', {usercalories:calorie_limit, foods:data}); res.redirect('/query');});
 
 });
 
