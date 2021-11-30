@@ -30,7 +30,7 @@ app.get('/query', function(req, res){
 });
 
 app.get('/get_history', function(req, res){
-  console.log(JSON.stringify(app.get('history_result'), null, 4));
+  // console.log(JSON.stringify(app.get('history_result'), null, 4));
   res.send(app.get('history_result'));
 });
 
@@ -257,7 +257,7 @@ app.post('/logmeal', async (req1, res) => {
   };
   var today = new Date();
 
-  var date = (today.getMonth()+1)+'-'+today.getDate()+'-'+today.getFullYear();
+  var date = today.getFullYear()+'-'(today.getMonth()+1)+'-'+today.getDate();
   req.body.date = date;
 
   console.log(JSON.stringify(req, null, 2));
@@ -332,7 +332,7 @@ app.post('/save_history', async (req, res) => {
 
   const query = req.body;
 
-  console.log(query);
+  // console.log(query);
 
   await client.connect();
 
