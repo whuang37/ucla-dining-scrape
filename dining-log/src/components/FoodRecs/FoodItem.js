@@ -2,8 +2,6 @@ import React from "react";
 import { useState } from 'react';
 import styled from "styled-components";
 
-// TODO: handle the case where there are no allergens
-
 const FoodName = styled.span`
     font-weight: bold;
     padding-left: 2%;

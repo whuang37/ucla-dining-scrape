@@ -28,11 +28,16 @@ export default function List(props) {
         let allergens;
         if (foods.allergens === undefined)
             allergens = []
+        else if (typeof foods.allergens === "string")
+            allergens = foods.allergens
         else 
+        {
             allergens = Object.values(foods.allergens)
+            allergens = allergens.join(", ")
+        }
 
         return <div> 
-            <FoodItem name={foods.name} allergens={allergens.join(", ")} calories={foods.calories} setSelected={props.setSelected}/> 
+            <FoodItem name={foods.name} allergens={allergens} calories={foods.calories} setSelected={props.setSelected}/> 
         </div>;
     })
 

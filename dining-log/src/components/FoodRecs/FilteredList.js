@@ -99,18 +99,26 @@ export default class Filter extends React.Component {
 
     // displayFoods = data.foods + selectedFoods
     mergeFoods() {
-        let query = this.state.queryFoods
-        let selected = this.state.selectedFoods
-        query.concat(selected)
-        for(var i=0; i<query.length; ++i) {
-            for(var j=i+1; j<query.length; ++j) {
-                if(query[i] === query[j])
-                    query.splice(j--, 1);
+        const query = this.state.queryFoods
+        console.log('before concat, selected foods')
+        // console.log(query)
+        const selected = this.state.selectedFoods
+        console.log(selected)
+        let display = query.concat(selected)
+        // console.log('after concat')
+        // console.log(display)
+        for(var i=0; i<display.length; ++i) {
+            for(var j=i+1; j<display.length; ++j) {
+                if(display[i].name === display[j].name)
+                    display.splice(j--, 1);
             }
         }    
         this.setState({
-            displayFoods: query 
+            displayFoods: display 
         }) 
+        console.log('without duplicates')
+        console.log(display)
+        console.log(this.state.displayFoods)
     }
 
     render() {
