@@ -27,20 +27,13 @@ export default class Filter extends React.Component {
             calories: false,
             selectedFoods: [],
             displayFoods: [],   //displayFoods = data.foods + selectedFoods
-            total: 0
+            total: 0,
+            usercalories: 0,
         };
     } 
 
-    componentDidMount() {
-        this.middle();
-      
-        fetch('http://localhost:8080/query')
-            .then(response => response.json())
-            .then(data => {
-                this.setState({
-                    displayFoods: data.foods
-                }) 
-            });
+    async componentDidMount() {
+        await this.middle();
     }
 
 
@@ -50,15 +43,6 @@ export default class Filter extends React.Component {
             || JSON.stringify(this.state.selectedFoods) !== JSON.stringify(prevState.selectedFoods)) 
         {
             await this.middle();
-          
-            fetch('http://localhost:8080/query')
-                .then(response => response.json())
-                .then(data => {
-                    this.setState({
-                        displayFoods: data.foods 
-                    }) 
-                });
-            
             this.mergeFoods();
         }
     }
@@ -68,11 +52,20 @@ export default class Filter extends React.Component {
         await getFoods({
             meal: this.state.meal,
             hall: this.state.hall,
-            username: this.props.username,
+            username: sessionStorage.getItem('username'),
             selectedFoods: this.state.selectedFoods,
             allergens: this.state.allergens,
             calories: this.state.calories,
         }) 
+
+        fetch('http://localhost:8080/query')
+            .then(response => response.json())
+            .then(data => {
+                this.setState({
+                    usercalories: data.usercalories,
+                    displayFoods: data.foods
+                }) 
+            });
     }
     
     // callback function to add foodItem to array of selectedFoods: pass function to foodlist --> fooditem as a prop, call callback function from foodItem with food object as argument to add it to the array of selectedFoods
@@ -81,7 +74,7 @@ export default class Filter extends React.Component {
         if (selected)
             this.setState((state)=>({
                 selectedFoods: [...state.selectedFoods, food]
-            }), () => console.log(this.state.selectedFoods));
+            }));
         // remove food from list if checkbox got unchecked
         else
         {
@@ -92,7 +85,7 @@ export default class Filter extends React.Component {
                 curr.splice(index, 1);
                 this.setState({
                     selectedFoods: curr
-                }, () => console.log(this.state.selectedFoods));
+                });
             }
         }
         this.calculateCalories();
@@ -104,6 +97,7 @@ export default class Filter extends React.Component {
         }));
     }
 
+    // displayFoods = data.foods + selectedFoods
     mergeFoods() {
         let display = this.state.displayFoods
         let selected = this.state.selectedFoods
@@ -176,7 +170,7 @@ export default class Filter extends React.Component {
 
                 <div>
                     <p>Meal Calories: {this.state.total} </p>
-                    <p>Remaining Daily Calories: {this.props.dailyCalories - this.state.total} </p>
+                    <p>Remaining Daily Calories: {this.state.usercalories - this.state.total} </p>
                     <button class={styles.button}>Log Meal</button>
                 </div>
             </div>
