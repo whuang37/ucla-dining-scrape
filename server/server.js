@@ -91,21 +91,23 @@ app.post('/login', async (req, res) => {
 });
 
 app.get('/profile', function(req, res){
-  console.log(app.get('profile'));
   res.send(app.get('profile'));
 });
 
 app.post('/user', async (req, res) => {
   await client.connect();
-  
+
   const users = client.db("diningLog").collection('profiles');
 
   const cursor = users.find({username: req.body.username})
 
   const user = cursor.next();
   user.then((u) => {
+    if(u)
+    {
       app.set('profile', {allergens: u.allergens, calories: u.calories});
       res.redirect('/profile');
+    }
     });
 });
 

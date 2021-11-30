@@ -35,21 +35,23 @@ async function sendUserData(credentials) {
     .then(data => data.json())
  }
 
-export default function Dashboard({un}) {
+export default function Dashboard() {
   const [dietaryRestrictions, setDietaryRestrictions] = useState();
   const [calories, setCalories] = useState();
+  const [user, setUsername] = useState();
   useEffect(() => {
+    setUsername(sessionStorage.getItem('username'));
 
     async function middle(){
-      await sendUserData({username:un}) 
-    }
-  middle();
-
-    fetch('http://localhost:8080/profile')
+      await sendUserData({username:user});
+      fetch('http://localhost:8080/profile')
     .then(response => response.json())
     .then(data => {
       setDietaryRestrictions(data.allergens); setCalories(data.calories);});  
-  }, [un]);
+    }
+  middle();
+
+  } ,[user]);
   
 
       return(
@@ -59,7 +61,7 @@ export default function Dashboard({un}) {
         <ProfileDiv> 
           <Image> </Image>
           <TextDiv>
-            <h3> <strong>{un}</strong> </h3>
+            <h3> <strong>{user}</strong> </h3>
             <h3> <strong>Dietary Restrictions:</strong> {dietaryRestrictions} </h3>
             <h3> <strong>Daily Calorie Goal:</strong> {calories} </h3>
           </TextDiv>

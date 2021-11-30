@@ -2,41 +2,38 @@ import React, { useState} from 'react';
 import {  Navigate } from 'react-router-dom';
 import styles from './Login.module.css';
 
- async function loginUser(credentials) {
-    return fetch('http://localhost:8080/login', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(credentials)
-    })
-      .then(data => data.json())
-   }
 
-export default function Login(props) {
+export default function Login() {
   const [username, setUserName] = useState();
   const [password, setPassword] = useState();
   const [submit, setSubmit] = useState();
   const [wrongPass, setWrongPass] = useState();
   const handleSubmit = async e => {
     e.preventDefault();
-
+    async function loginUser(credentials) {
+      fetch('http://localhost:8080/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(credentials)
+      })
+        .then(data => data.json())
+        fetch('http://localhost:8080/auth')
+    .then(response => response.json())
+    .then(data => {  if(data.response === 'authorized') {
+                                        setSubmit(true); 
+                                      }
+                                      else
+                                      {
+                                        setSubmit(false);
+                                        setWrongPass(data.response);
+                                      }});
+     }
     await loginUser({
       username,
       password
     });
-    
-
-    fetch('http://localhost:8080/auth')
-  .then(response => response.json())
-  .then(data => {  if(data.response === 'authorized') {
-                                      setSubmit(true); 
-                                    }
-                                    else
-                                    {
-                                      setSubmit(false);
-                                      setWrongPass(data.response);
-                                    }});
     
   }
 
@@ -49,7 +46,7 @@ export default function Login(props) {
   }
   const handleUsername = (e) => {
     setUserName(e.target.value); 
-    props.setUsername(e.target.value);
+    sessionStorage.setItem('username', e.target.value);
   }
   if(!submit)
   {

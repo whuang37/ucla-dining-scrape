@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
 import Dashboard from './components/Dashboard/Dashboard';
 import Login from './components/Login/Login';
 import Preferences from './components/Preferences/Preferences';
@@ -12,16 +12,9 @@ import Landing from "./components/Landing/Landing";
 export default class App extends React.Component {
   constructor(props) {
     super(props);
-    this.setUsername.bind(this);
     this.state = {
-      username: ""
+      
     }
-  }
-
-  setUsername = (un) => {
-    this.setState({
-        username: un
-    });
   }
 
   render (){
@@ -30,12 +23,13 @@ export default class App extends React.Component {
       {/* <h1>Application</h1> */}
       <BrowserRouter>
         <Routes>
+        
           <Route path="/" element={<Landing />} />
           <Route path="/signup" element={<SignUp />} />
-          <Route path="/dashboard" element={<Dashboard un={this.state.username}/>} />
+          <Route path="/dashboard" element={<Dashboard/>} />
           <Route path="/preferences" element={<Preferences />} />
           <Route path="/foodpage" element={<FoodPage />} />
-          <Route path="/login" element={<Login setUsername = {this.setUsername}/>} />
+          <Route path="/login" element={<Login />} />
         </Routes>
       </BrowserRouter>
     </div>);
