@@ -3,7 +3,7 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import styles from "./Page.module.css";
 import FoodList from "./FoodList";
 
-// TODO: get link to fetch from
+// TODO: need to get user's calorie preferences as a prop
 async function getFoods(filters) {
     return fetch('http://localhost:8080/foodfilter', {
     method: 'POST',
@@ -26,9 +26,9 @@ export default class Filter extends React.Component {
             allergens: false,
             calories: false,
             selectedFoods: [],
-            displayFoods: [],   //displayFoods = data.foods + selectedFoods
-            total: 0,
-            usercalories: 0,
+            queryFoods: [],   
+            displayFoods: [],
+            total: 0
         };
     } 
 
@@ -62,8 +62,7 @@ export default class Filter extends React.Component {
             .then(response => response.json())
             .then(data => {
                 this.setState({
-                    usercalories: data.usercalories,
-                    displayFoods: data.foods
+                    queryFoods: data.foods
                 }) 
             });
     }
@@ -99,18 +98,18 @@ export default class Filter extends React.Component {
 
     // displayFoods = data.foods + selectedFoods
     mergeFoods() {
-        let display = this.state.displayFoods
+        let query = this.state.queryFoods
         let selected = this.state.selectedFoods
-        for(var i = 0, l = display.length; i < l; i++) {
+        for(var i = 0, l = query.length; i < l; i++) {
             for(var j = 0, ll = selected.length; j < ll; j++) {
-                if(display[i].name === selected[j].name) {
-                    display.splice(i, 1, selected[j]);
+                if(query[i].name === selected[j].name) {
+                    query.splice(i, 1, selected[j]);
                     break;
                 }
             }
         }
         this.setState({
-            displayFoods: display 
+            displayFoods: query 
         }) 
     }
 
