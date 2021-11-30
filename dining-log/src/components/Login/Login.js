@@ -73,6 +73,6 @@ export default function Login(props) {
   }
   else
   {
-    return <Navigate to="/foodpage" />
+    return <Navigate to="/dashboard" />
   }
 }

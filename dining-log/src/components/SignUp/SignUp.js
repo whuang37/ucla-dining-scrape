@@ -17,23 +17,16 @@ import {Link} from 'react-router-dom';
 export default function SignUp(props) {
   const [username, setUserName] = useState();
   const [password, setPassword] = useState();
-  const [allergens, setAllergens] = useState({
-    "gluten": false,
-    "wheat": false,
-    "eggs": false,
-    "milk": false,
-    "soybeans": false,
-    "nuts": false,
-    "fish": false,
-    "shellfish": false,
-    "peanuts": false,
-  });
+  const [allergens, setAllergens] = useState([]);
+  const [clickedAllergens, setClickedAllergens] = useState(new Array(9).fill(false));
   const [calories, setCalories] = useState();
+
+  const [allergenNammes, setAllergenNames] = useState(["gluten", "wheat", "eggs", "milk", "soybeans", "nuts", "fish", "shellfish", "peanuts"])
 
   const [submit, setSubmit] = useState();
   const handleSubmit = async e => {
     e.preventDefault();
-
+    console.log(allergens);
     await signUpUser({
       username,
       password,
@@ -54,6 +47,26 @@ export default function SignUp(props) {
       return  <div class={styles.signupError}>Account already exists, <Link to="/login">Sign in</Link></div>;
     }
   }
+
+  const handleCheckBox = (position, name) => 
+  {
+    const updatedCheckedState = clickedAllergens.map((item, index) =>
+      index === position ? !item : item
+    );
+    setClickedAllergens(updatedCheckedState);
+    if(!clickedAllergens[position])
+    {
+      setAllergens(allergens.concat(name));
+    }
+    else
+    {
+      let new_allergens = allergens;
+      new_allergens.splice(new_allergens.indexOf(name), 1);
+      setAllergens(new_allergens);
+    }
+    
+  }
+
     return(
       <div>
         <BackToLanding/>
@@ -69,86 +82,14 @@ export default function SignUp(props) {
           <div>
               <p class={styles.prefHeader}>Allergies</p>
               <form class={styles.allergenGrid}>
-                <div>
+                {allergenNammes.map((item, index) => {return(<div>
                   <input
                     type="checkbox"
-                    checked={allergens.gluten}
-                    onClick={() => {setAllergens(!allergens.gluten)}}
+                    checked={clickedAllergens[index]}
+                    onChange={() => handleCheckBox(index, item)}
                   />
-                  <span class={styles.label}>Gluten</span>
-                </div>
-
-                <div>
-                  <input
-                      type="checkbox"
-                      checked={allergens.wheat}
-                      onClick={() => {setAllergens(!allergens.wheat)}}
-                  />
-                  <span class={styles.label}>Wheat</span>
-                </div>
-                
-                <div>
-                  <input
-                      type="checkbox"
-                      checked={allergens.eggs}
-                      onClick={() => {setAllergens(!allergens.eggs)}}
-                  />
-                  <span class={styles.label}>Eggs</span>
-                </div>
-
-                <div>
-                  <input
-                      type="checkbox"
-                      checked={allergens.milk}
-                      onClick={() => {setAllergens(!allergens.milk)}}
-                  />
-                  <span class={styles.label}>Milk</span>
-                </div>
-                    
-                <div>
-                  <input
-                      type="checkbox"
-                      checked={allergens.soybeans}
-                      onClick={() => {setAllergens(!allergens.soybeans)}}
-                  />
-                  <span class={styles.label}>Soybeans</span>
-                </div>
-
-                <div>
-                  <input
-                      type="checkbox"
-                      checked={allergens.nuts}
-                      onClick={() => {setAllergens(!allergens.nuts)}}
-                  />
-                  <span class={styles.label}>Nuts</span>
-                </div>
-
-                <div>
-                  <input
-                      type="checkbox"
-                      checked={allergens.fish}
-                      onClick={() => {setAllergens(!allergens.fish)}}
-                  />
-                  <span class={styles.label}>Fish</span>
-                </div>
-
-                <div>
-                  <input
-                      type="checkbox"
-                      checked={allergens.shellfish}
-                      onClick={() => {setAllergens(!allergens.shellfish)}}
-                  />
-                  <span class={styles.label}>Shellfish</span>
-                </div>
-                    
-                <div>
-                  <input
-                      type="checkbox"
-                      checked={allergens.peanuts}
-                      onClick={() => {setAllergens(!allergens.peanuts)}}
-                  />
-                  <span class={styles.label}>Peanuts</span>
-                </div>
+                  <span class={styles.label}>{item}</span>
+                </div>);})}
               </form>
 
             <p class={styles.prefHeader}>Daily Calorie Goal</p>

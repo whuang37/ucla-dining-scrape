@@ -55,7 +55,6 @@ app.post('/signup', async (req, res) => {
           if(err) return console.log(err);
           
         });
-
         users.insertOne({username: req.body.username, password: req.body.password}, (err, data) => {
           if(err) return console.log(err);
           
