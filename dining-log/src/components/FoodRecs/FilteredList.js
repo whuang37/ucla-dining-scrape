@@ -26,7 +26,8 @@ export default class Filter extends React.Component {
             allergens: false,
             calories: false,
             selectedFoods: [],
-            displayFoods: [],   
+            queryFoods: [],   
+            displayFoods: [],
             total: 0
         };
     } 
@@ -61,7 +62,7 @@ export default class Filter extends React.Component {
             .then(response => response.json())
             .then(data => {
                 this.setState({
-                    displayFoods: data.foods
+                    queryFoods: data.foods
                 }) 
             });
     }
@@ -97,18 +98,18 @@ export default class Filter extends React.Component {
 
     // displayFoods = data.foods + selectedFoods
     mergeFoods() {
-        let display = this.state.displayFoods
+        let query = this.state.queryFoods
         let selected = this.state.selectedFoods
-        for(var i = 0, l = display.length; i < l; i++) {
+        for(var i = 0, l = query.length; i < l; i++) {
             for(var j = 0, ll = selected.length; j < ll; j++) {
-                if(display[i].name === selected[j].name) {
-                    display.splice(i, 1, selected[j]);
+                if(query[i].name === selected[j].name) {
+                    query.splice(i, 1, selected[j]);
                     break;
                 }
             }
         }
         this.setState({
-            displayFoods: display 
+            displayFoods: query 
         }) 
     }
 
