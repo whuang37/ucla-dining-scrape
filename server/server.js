@@ -172,6 +172,8 @@ app.post('/foodfilter', async (req, res) => {
     username: req.body.username
   }); 
 
+  console.log(req.body);
+
   var calorie_limit;
   query.allergens = {$nin: []};
 
@@ -196,14 +198,110 @@ app.post('/foodfilter', async (req, res) => {
     query.calories = {$exists: true};
   }
 
-  console.log(query);
+  // console.log(query);
 
   var cursor = client.db("diningLog").collection('food').find(query);
 
+<<<<<<< HEAD
+  cursor.toArray().then((data) => {app.set('query_result', {usercalories: calorie_query,foods:data}); res.redirect('/query');});
+=======
   cursor.toArray().then((data) => {app.set('query_result', {usercalories:calorie_limit, foods:data}); res.redirect('/query');});
+>>>>>>> fe30e7fdec44187f81a9241ec947cb8127bae30e
 
 });
 
+
+app.post('/logmeal', async (req1, res) => {
+  // console.log("AM I BEING RUN");
+  const foods = 
+  [{
+      "name": "Salad",
+      "allergens": "soy, dairy, nuts",
+      "calories": 218 },
+  {
+      "name": "Brown rice",
+      "allergens": "gluten",
+      "calories": 175 },
+  {
+      "name": "Egg Whites Omelet",
+      "allergens": "eggs",
+      "calories": 174 },
+  {
+      "name": "Prosciutto Sandwich",
+      "allergens": "gluten",
+      "calories": 800 },
+  {
+      "name": "Grilled Chicken",
+      "calories": 112 },
+  {
+      "name": "Blueberry Topping",
+      "calories": 41 }
+  ]
+    /* 
+    TODO: 
+
+    pushing to db
+      get selected foods from frontend post
+        must include name, meal, and food objects
+      append on a date
+
+      push ^^^ into mongodb database under history collection
+    
+    pulling from db to history page
+      separate post request to pull history data
+        by username and date (singular date)
+        will have to show breafkast, lunch, dinner + foods so pull all three objects
+
+      get the objects under the user and date
+      return <3 object for each meal, send empty objects for nonexistant meals
+    */
+
+
+  const req = {
+    body: {
+      username: "rohan",
+      meal: "lunch",
+      selectedFoods: foods
+    }
+  };
+  var today = new Date();
+
+  var date = (today.getMonth()+1)+'-'+today.getDate()+'-'+today.getFullYear();
+  var insert_object = Object.assign(req);
+  insert_object.body.date = date;
+
+  console.log(JSON.stringify(insert_object, null, 2));
+  
+  // to check if the current date exists already
+  const check_exist_query = {
+    username: insert_object.body.username,
+    meal: insert_object.body.meal,
+    date: date
+  }
+
+  await client.connect();
+
+  const history = client.db("diningLog").collection('history');
+// deletes existing record on curr date, user, meal
+  history.deleteMany(check_exist_query, (err, data) => {
+    if(err) return console.log(err);
+  });
+// insert the received data
+  history.insertOne(insert_object.body, (err, data) => {
+    if(err) return console.log(err);
+  });
+  // const cursor = users.find({username: req.body.username})
+
+    
+  // const user = cursor.next();
+  // user.then((u) => {
+  //   if(u)
+  //   {
+  //     app.set('profile', {allergens: u.allergens, calories: u.calories});
+  //     res.redirect('/profile');
+  //   }
+  //   });
+});
 
 
 app.listen(8080, () => {
