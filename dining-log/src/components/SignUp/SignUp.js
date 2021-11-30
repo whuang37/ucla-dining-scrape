@@ -36,9 +36,6 @@ export default function SignUp(props) {
   .then(data => {setSubmit(data.response)});
     
   }
- const renderResponseText = () => {
-    if (submit === 'success') {
-
   let responseText;
   const renderResponseText = () => {
     if (submit == 'success') {
