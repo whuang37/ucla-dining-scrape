@@ -16,7 +16,7 @@ export default class App extends React.Component {
     }
   }
 
-// need to get user's dailyCalories as a prop for FoodPage
+// need to get user's dailyCalories and username as a prop for FoodPage
 
   render (){
     return(
