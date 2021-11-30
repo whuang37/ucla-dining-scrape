@@ -2,10 +2,20 @@
     display: grid;
     grid-template-columns: repeat(5, auto);
     justify-content: center;
+    align-items: center;
+    gap: 50px;
     margin-top: 2%;
 }
 
 .label {
     padding: 7px;
     white-space: nowrap;
+}
+
+.button {
+    background-color: #198754;
+    border: transparent;
+    border-radius: 0.25rem;
+    color: white;
+    padding: 0.375rem 0.75rem;
 }

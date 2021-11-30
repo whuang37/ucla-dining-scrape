@@ -1,15 +1,12 @@
-import FoodList from "./FoodList";
-import FilterBar from "./FilterBar";
+import FilteredList from "./FilteredList";
 import NavBar from "../navbar"
+import styles from "./Page.module.css";
 
 export default function Page(props) {
     return (
         <div>
             <NavBar/>
-            <FilterBar/>
-            <div>
-                <FoodList meal="Breakfast" hall="De Neve"/>
-            </div>
+            <FilteredList dailyCalories={props.dailyCalories} />
         </div>
     )
 }

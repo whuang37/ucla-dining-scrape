@@ -7,20 +7,21 @@ const NavContainer = styled(Container)`
     text-align: center;
     background-color: #C4C4C4;
     width: 100%;
+    margin-bottom: 2%;
 `;
 
 const StyledNav = styled(Nav)`
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    text-align: left;
-    padding-left: 75px; 
+    grid-gap: 150px;
+    text-align: center;
 `;
 
 export default function NavBar(props) {
     return (
         <Navbar expand="lg">
             <NavContainer>
-                <Navbar.Brand href="home">Dining Hall Food Log</Navbar.Brand>
+                <Navbar.Brand href="/">Dining Hall Food Log</Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                 <StyledNav>
