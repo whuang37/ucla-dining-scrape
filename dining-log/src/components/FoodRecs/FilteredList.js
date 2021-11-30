@@ -31,16 +31,9 @@ export default class Filter extends React.Component {
         };
     } 
 
-    componentDidMount() {
-        this.middle();
-      
-        fetch('http://localhost:8080/query')
-            .then(response => response.json())
-            .then(data => {
-                this.setState({
-                    displayFoods: data.foods
-                }) 
-            });
+    async componentDidMount() {
+        await this.middle();
+        console.log(this.props)
     }
 
 
@@ -50,15 +43,6 @@ export default class Filter extends React.Component {
             || JSON.stringify(this.state.selectedFoods) !== JSON.stringify(prevState.selectedFoods)) 
         {
             await this.middle();
-          
-            fetch('http://localhost:8080/query')
-                .then(response => response.json())
-                .then(data => {
-                    this.setState({
-                        displayFoods: data.foods 
-                    }) 
-                });
-            
             this.mergeFoods();
         }
     }
@@ -73,6 +57,14 @@ export default class Filter extends React.Component {
             allergens: this.state.allergens,
             calories: this.state.calories,
         }) 
+
+        fetch('http://localhost:8080/query')
+            .then(response => response.json())
+            .then(data => {
+                this.setState({
+                    displayFoods: data.foods
+                }) 
+            });
     }
     
     // callback function to add foodItem to array of selectedFoods: pass function to foodlist --> fooditem as a prop, call callback function from foodItem with food object as argument to add it to the array of selectedFoods
