@@ -40,7 +40,7 @@ export default class Filter extends React.Component {
 
     async componentDidUpdate(prevProps, prevState){
         if (this.state.meal !== prevState.meal || this.state.hall !== prevState.hall || this.state.allergens !== prevState.allergens 
-            || this.state.calories !== prevState.calories 
+            || this.state.calories !== prevState.calories || JSON.stringify(this.state.queryFoods) !== JSON.stringify(prevState.queryFoods)
             || JSON.stringify(this.state.selectedFoods) !== JSON.stringify(prevState.selectedFoods)) 
         {
             await this.middle();
@@ -101,14 +101,13 @@ export default class Filter extends React.Component {
     mergeFoods() {
         let query = this.state.queryFoods
         let selected = this.state.selectedFoods
-        for(var i = 0, l = query.length; i < l; i++) {
-            for(var j = 0, ll = selected.length; j < ll; j++) {
-                if(query[i].name === selected[j].name) {
-                    query.splice(i, 1, selected[j]);
-                    break;
-                }
+        query.concat(selected)
+        for(var i=0; i<query.length; ++i) {
+            for(var j=i+1; j<query.length; ++j) {
+                if(query[i] === query[j])
+                    query.splice(j--, 1);
             }
-        }
+        }    
         this.setState({
             displayFoods: query 
         }) 
