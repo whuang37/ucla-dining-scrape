@@ -52,7 +52,7 @@ export default class Filter extends React.Component {
         await getFoods({
             meal: this.state.meal,
             hall: this.state.hall,
-            username: this.props.username,
+            username: sessionStorage.getItem('username'),
             selectedFoods: this.state.selectedFoods,
             allergens: this.state.allergens,
             calories: this.state.calories,
@@ -73,7 +73,7 @@ export default class Filter extends React.Component {
         if (selected)
             this.setState((state)=>({
                 selectedFoods: [...state.selectedFoods, food]
-            }), () => console.log(this.state.selectedFoods));
+            }));
         // remove food from list if checkbox got unchecked
         else
         {
@@ -84,7 +84,7 @@ export default class Filter extends React.Component {
                 curr.splice(index, 1);
                 this.setState({
                     selectedFoods: curr
-                }, () => console.log(this.state.selectedFoods));
+                });
             }
         }
         this.calculateCalories();
@@ -169,7 +169,7 @@ export default class Filter extends React.Component {
 
                 <div>
                     <p>Meal Calories: {this.state.total} </p>
-                    <p>Remaining Daily Calories: {this.props.dailyCalories - this.state.total} </p>
+                    <p>Remaining Daily Calories: {this.state.usercalories - this.state.total} </p>
                     <button class={styles.button}>Log Meal</button>
                 </div>
             </div>

@@ -3,17 +3,6 @@ import { BrowserRouter, Route, Routes, Navigate, Link } from 'react-router-dom';
 import styles from './Login.module.css';
 import BackToLanding from '../backToLanding.js'
 
-async function loginUser(credentials) {
-  return fetch('http://localhost:8080/login', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(credentials)
-  })
-  .then(data => data.json())
-}
-
 export default function Login(props) {
   const [username, setUserName] = useState();
   const [password, setPassword] = useState();
@@ -21,26 +10,35 @@ export default function Login(props) {
   const [wrongPass, setWrongPass] = useState();
   const handleSubmit = async e => {
     e.preventDefault();
+    async function loginUser(credentials) {
+      fetch('http://localhost:8080/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(credentials)
+      })
+        .then(data => data.json())
+        fetch('http://localhost:8080/auth')
+    .then(response => response.json())
+    .then(data => {  if(data.response === 'authorized') {
+                                          sessionStorage.setItem('username', username)
+                                        setSubmit(true); 
+                                      }
+                                      else
+                                      {
+                                        setSubmit(false);
+                                        setWrongPass(data.response);
+                                      }
+                                    });
 
-    const token = await loginUser({
+     }
+    await loginUser({
       username,
       password
     });
     
-
-    fetch('http://localhost:8080/auth')
-    .then(response => response.json())
-    .then(data => {
-      if(data.response == 'authorized')
-        setSubmit(true);
-      else{
-        setSubmit(false);
-        setWrongPass(data.response);
-      }
-    });
   }
-
-  let responseText;
   const renderResponseText = () => {
     if (wrongPass == 'failed') {
       return <div class={styles.loginMessage}>Wrong Password</div>;
@@ -75,6 +73,6 @@ export default function Login(props) {
   }
   else
   {
-    return <Navigate to="/dashboard" />
+    return <Navigate to="/foodpage" />
   }
 }
