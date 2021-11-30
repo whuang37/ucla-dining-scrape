@@ -28,6 +28,7 @@ export default class Filter extends React.Component {
             selectedFoods: [],
             queryFoods: [],   
             displayFoods: [],
+            usercalories: 0,
             total: 0
         };
     } 
@@ -62,6 +63,7 @@ export default class Filter extends React.Component {
             .then(response => response.json())
             .then(data => {
                 this.setState({
+                    usercalories: data.usercalories,
                     queryFoods: data.foods
                 }) 
             });
