@@ -16,13 +16,18 @@ import BackToLanding from '../backToLanding.js'
 export default function SignUp(props) {
   const [username, setUserName] = useState();
   const [password, setPassword] = useState();
+  const [allergens, setAllergens] = useState();
+  const [calories, setCalories] = useState();
+
   const [submit, setSubmit] = useState();
   const handleSubmit = async e => {
     e.preventDefault();
 
-    const token = await signUpUser({
+    await signUpUser({
       username,
-      password
+      password,
+      allergens,
+      calories
     });
     
 
@@ -31,6 +36,8 @@ export default function SignUp(props) {
   .then(data => {setSubmit(data.response)});
     
   }
+ const renderResponseText = () => {
+    if (submit === 'success') {
 
   let responseText;
   const renderResponseText = () => {
@@ -45,19 +52,27 @@ export default function SignUp(props) {
         <BackToLanding/>
         <h1>Sign Up</h1>
         {renderResponseText()}
-        <div class={styles.signupWrapper}>
-          <form onSubmit={handleSubmit}>
-            <label> 
-              <input class={styles.signupInput} type="text" placeholder="Email" onChange={e => setUserName(e.target.value)} required/>
-            </label>
-            <br/>
-            <label>
-              <input class={styles.signupInput} type="password" placeholder="Password" onChange={e => setPassword(e.target.value)} required/>
-            </label>
-            <br/>
-            <button class={styles.signupSubmit} type="submit">Submit</button>
-          </form>
-        </div>
+        <form onSubmit={handleSubmit}>
+          <label>
+            <p>Username</p>
+            <input type="text" onChange={e => setUserName(e.target.value)}/>
+          </label>
+          <label>
+            <p>Password</p>
+            <input type="password" onChange={e => setPassword(e.target.value)}/>
+          </label>
+          <label>
+            <p>Allergies</p>
+            <input type="text" id='grey' placeholder="eggs, milk, peanuts..." onChange={e => setAllergens(e.target.value)}/>
+          </label>
+          <label>
+            <p>Daily Calorie Goal</p>
+            <input type="text" id='grey' placeholder="2000" onChange={e => setCalories(e.target.value)}/>
+          </label>
+          <div>
+            <button type="submit">Submit</button>
+          </div>
+        </form>
       </div>
     )
 }

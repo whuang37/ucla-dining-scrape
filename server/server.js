@@ -26,6 +26,7 @@ app.post('/signup', async (req, res) => {
   await client.connect();
 
   const users = client.db("diningLog").collection('users');
+  const profiles = client.db("diningLog").collection('profiles');
 
 
   const cursor = users.find({username: req.body.username})
@@ -39,7 +40,12 @@ app.post('/signup', async (req, res) => {
       }
       else
       {
-        users.insertOne(req.body, (err, data) => {
+        profiles.insertOne({username:req.body.username, allergens:req.body.allergens, calories:req.body.calories}, (err, data) => {
+          if(err) return console.log(err);
+          
+        });
+
+        users.insertOne({username: req.body.username, password: req.body.password}, (err, data) => {
           if(err) return console.log(err);
           
         });
@@ -83,6 +89,29 @@ app.post('/login', async (req, res) => {
     });
 
 });
+
+app.get('/profile', function(req, res){
+  res.send(app.get('profile'));
+});
+
+app.post('/user', async (req, res) => {
+  await client.connect();
+
+  const users = client.db("diningLog").collection('profiles');
+
+  const cursor = users.find({username: req.body.username})
+
+  const user = cursor.next();
+  user.then((u) => {
+    if(u)
+    {
+      app.set('profile', {allergens: u.allergens, calories: u.calories});
+      res.redirect('/profile');
+    }
+    });
+});
+
+
 
 app.listen(8080, () => {
   console.log(`Server is running on port: 8080`);
