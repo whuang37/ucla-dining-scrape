@@ -47,7 +47,6 @@ export default class Filter extends React.Component {
             this.mergeFoods();
         }
     }
-    
 
     async middle() {
         await getFoods({
