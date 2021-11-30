@@ -26,7 +26,7 @@ export default class Filter extends React.Component {
             allergens: false,
             calories: false,
             selectedFoods: [],
-            displayFoods: [],   //displayFoods = data.foods + selectedFoods
+            displayFoods: [],   
             total: 0
         };
     } 
@@ -96,6 +96,7 @@ export default class Filter extends React.Component {
         }));
     }
 
+    // displayFoods = data.foods + selectedFoods
     mergeFoods() {
         let display = this.state.displayFoods
         let selected = this.state.selectedFoods
