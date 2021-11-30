@@ -7,6 +7,7 @@ import Preferences from './components/Preferences/Preferences';
 import SignUp from './components/SignUp/SignUp';
 import FoodPage from "./components/FoodRecs/FoodPage";
 import Landing from "./components/Landing/Landing";
+import History from "./components/History/History";
 
 export default class App extends React.Component {
   constructor(props) {
@@ -30,6 +31,7 @@ export default class App extends React.Component {
           <Route path="/preferences" element={<Preferences />} />
           <Route path="/foodpage" element={<FoodPage/>}/>
           <Route path="/login" element={<Login />} />
+          <Route path="/history" element={<History />} />
         </Routes>
       </BrowserRouter>
     </div>);
