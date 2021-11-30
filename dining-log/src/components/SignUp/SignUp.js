@@ -1,6 +1,10 @@
 import React, { useState} from 'react';
 import styles from './SignUp.module.css';
+<<<<<<< HEAD
 import BackToLanding from '../backToLanding.js'
+=======
+import {Link} from 'react-router-dom';
+>>>>>>> 89bc8dbeec9468fbe64569005ac8183e3bf50f35
 
  async function signUpUser(credentials) {
     return fetch('http://localhost:8080/signup', {
@@ -25,7 +29,6 @@ export default function SignUp(props) {
       password
     });
     
-
     fetch('http://localhost:8080/signedup')
   .then(response => response.json())
   .then(data => {setSubmit(data.response)});
@@ -35,9 +38,9 @@ export default function SignUp(props) {
   let responseText;
   const renderResponseText = () => {
     if (submit == 'success') {
-      return <div class={styles.signupSuccess}>Account created successfully</div>;
+      return <div class={styles.signupSuccess}> Account created successfully, now <Link to="/login">Sign in</Link> </div>;
     } else if (submit == 'failed'){
-      return  <div class={styles.signupError}>Account already exists</div>;
+      return  <div class={styles.signupError}>Account already exists, <Link to="/login">Sign in</Link></div>;
     }
   }
     return(
@@ -55,7 +58,7 @@ export default function SignUp(props) {
               <input class={styles.signupInput} type="password" placeholder="Password" onChange={e => setPassword(e.target.value)} required/>
             </label>
             <br/>
-            <button class={styles.signupSubmit} type="submit">Submit</button>
+            <button class={styles.signupSubmit} type="submit">Sign Up</button>
           </form>
         </div>
       </div>

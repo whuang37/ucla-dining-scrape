@@ -1,17 +1,17 @@
 import React, { useState} from 'react';
-import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
+import { BrowserRouter, Route, Routes, Navigate, Link } from 'react-router-dom';
 import styles from './Login.module.css';
 import BackToLanding from '../backToLanding.js'
 
 async function loginUser(credentials) {
-    return fetch('http://localhost:8080/login', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(credentials)
-    })
-      .then(data => data.json())
+  return fetch('http://localhost:8080/login', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(credentials)
+  })
+  .then(data => data.json())
 }
 
 export default function Login(props) {
@@ -45,7 +45,7 @@ export default function Login(props) {
     if (wrongPass == 'failed') {
       return <div class={styles.loginMessage}>Wrong Password</div>;
     } else if (wrongPass == 'new'){
-      return <div class={styles.loginMessage}>No account found</div>;
+      return <div class={styles.loginMessage}>No account found, please sign up</div>;
     }
   }
 
@@ -66,7 +66,8 @@ export default function Login(props) {
               <input class={styles.loginInput} type="password" placeholder="Password" onChange={e => setPassword(e.target.value)} required/>
             </label>
             <br/>
-            <button class={styles.loginSubmit}type="submit">Submit</button>
+            <button class={styles.loginSubmit}type="submit">Login</button>
+            <div> Need an account? <Link to="/signup">Sign up</Link> </div>
           </form>
         </div>
       </div>

@@ -1,10 +1,11 @@
 import styled from "styled-components";
+import NavBar from "../navbar"
 
 const ProfileDiv = styled.div`
-display: grid;
-grid-template-columns: 45% 55%;
-min-height: 300px;
-padding: 25px;
+  display: grid;
+  grid-template-columns: 45% 55%;
+  min-height: 300px;
+  padding: 25px;
 `;
 
 const Image = styled.div`
@@ -18,9 +19,9 @@ const Image = styled.div`
 `;
 
 const TextDiv = styled.div`
-display: grid;
-grid-template-rows: auto auto auto;
-font-family: Helvetica;
+  display: grid;
+  grid-template-rows: auto auto auto;
+  font-family: Helvetica;
 `;
 
 export default function Dashboard(props) {
@@ -30,6 +31,7 @@ export default function Dashboard(props) {
   let calories = props.calories;
   return(
     <div>
+      <NavBar/>
       <h2>Your Profile</h2>
       <ProfileDiv> 
         <Image image = {image}/>
