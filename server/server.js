@@ -196,7 +196,7 @@ app.post('/foodfilter', async (req, res) => {
     query.calories = {$exists: true};
   }
 
-  // console.log(query);
+  console.log(query);
 
   var cursor = client.db("diningLog").collection('food').find(query);
 

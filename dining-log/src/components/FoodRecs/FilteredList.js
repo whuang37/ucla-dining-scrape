@@ -62,6 +62,7 @@ export default class Filter extends React.Component {
             .then(response => response.json())
             .then(data => {
                 this.setState({
+                    usercalories: data.usercalories,
                     displayFoods: data.foods
                 }) 
             });
