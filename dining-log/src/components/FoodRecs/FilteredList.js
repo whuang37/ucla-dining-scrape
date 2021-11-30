@@ -88,6 +88,7 @@ export default class Filter extends React.Component {
                 });
             }
         }
+        setTimeout(() => console.log(this.state.selectedFoods), 3000)
         this.calculateCalories();
     }
 
@@ -100,10 +101,10 @@ export default class Filter extends React.Component {
     // displayFoods = data.foods + selectedFoods
     mergeFoods() {
         const query = this.state.queryFoods
-        console.log('before concat, selected foods')
+        // console.log('before concat, selected foods')
         // console.log(query)
         const selected = this.state.selectedFoods
-        console.log(selected)
+        // console.log(selected)
         let display = query.concat(selected)
         // console.log('after concat')
         // console.log(display)
@@ -116,9 +117,8 @@ export default class Filter extends React.Component {
         this.setState({
             displayFoods: display 
         }) 
-        console.log('without duplicates')
-        console.log(display)
-        console.log(this.state.displayFoods)
+        // console.log('without duplicates')
+        // console.log(this.state.displayFoods)
     }
 
     render() {
@@ -169,8 +169,6 @@ export default class Filter extends React.Component {
                             <span class={styles.label}>Filter by Daily Calorie Goal</span>
                         </label>
                     </form>
-    
-                    <button class={styles.button} type="submit">Find Food</button>
                 </div>
     
                 <FoodList meal={this.state.meal} hall={this.state.hall} display={this.state.displayFoods} selected={this.state.selectedFoods} setSelected={this.setSelected}/>

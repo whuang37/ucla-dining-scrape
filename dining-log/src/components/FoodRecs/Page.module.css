@@ -1,9 +1,9 @@
 .filterBar {
     display: grid;
-    grid-template-columns: repeat(5, auto);
+    grid-template-columns: repeat(4, auto);
     justify-content: center;
     align-items: center;
-    gap: 50px;
+    gap: 150px;
     margin-top: 2%;
 }
 
