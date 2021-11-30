@@ -3,7 +3,7 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import styles from "./Page.module.css";
 import FoodList from "./FoodList";
 
-// TODO: get link to fetch from
+// TODO: need to get user's calorie preferences as a prop
 async function getFoods(filters) {
     return fetch('http://localhost:8080/foodfilter', {
     method: 'POST',
@@ -33,7 +33,6 @@ export default class Filter extends React.Component {
 
     async componentDidMount() {
         await this.middle();
-        console.log(this.props)
     }
 
 

@@ -28,7 +28,7 @@ export default class App extends React.Component {
           <Route path="/signup" element={<SignUp />} />
           <Route path="/dashboard" element={<Dashboard/>} />
           <Route path="/preferences" element={<Preferences />} />
-          <Route path="/foodpage" element={<FoodPage dailyCalories={2000} username={"rohan"} />} />
+          <Route path="/foodpage" element={<FoodPage dailyCalories={2000} />} />
           <Route path="/login" element={<Login />} />
         </Routes>
       </BrowserRouter>
