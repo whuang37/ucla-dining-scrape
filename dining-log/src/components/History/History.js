@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import NavBar from "../navbar"
 import MealHistory from "./MealHistory";
@@ -22,73 +22,33 @@ const CalorieDiv = styled.div`
     font-size: 24px;
 `;
 
+async function sendUserData(credentials) {
+    return fetch('http://localhost:8080/save_history', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(credentials)
+    })
+      .then(data => data.json())
+}
+
 export default function History() {
     const [date, setDate] = useState()
-    const [foodList, setFoodList] = useState()
+    const [foodList, setFoodList] = useState({breakfast:[], lunch:[], dinner:[]})
     const [totalCalories, setTotalCalories] = useState()
-    let breakfast = []
-    let lunch = [
-        {
-            "name": "Salad",
-            "allergens": "soy, dairy, nuts",
-            "calories": 218
-        },
-        {
-            "name": "Brown rice",
-            "allergens": "gluten",
-            "calories": 175
-        },
-        {
-            "name": "Egg Whites Omelet",
-            "allergens": "eggs",
-            "calories": 174
-        },
-        {
-            "name": "Prosciutto Sandwich",
-            "allergens": "gluten",
-            "calories": 800
-        },
-        {
-            "name": "Grilled Chicken",
-            "calories": 112
-        },
-        {
-            "name": "Blueberry Topping",
-            "calories": 41
+
+    useEffect(() => {
+        async function middle(){
+          await sendUserData({username:sessionStorage.getItem('username'), date:date});
+          fetch('http://localhost:8080/get_history')
+        .then(response => response.json())
+        .then(data => {
+          setFoodList(data)});  
         }
-    ]
-    let dinner = [
-    {
-        "name": "Salad",
-        "allergens": "soy, dairy, nuts",
-        "calories": 218
-    },
-    {
-        "name": "Brown rice",
-        "allergens": "gluten",
-        "calories": 175
-    },
-    {
-        "name": "Egg Whites Omelet",
-        "allergens": "eggs",
-        "calories": 174
-    },
-    {
-        "name": "Prosciutto Sandwich",
-        "allergens": "gluten",
-        "calories": 800
-    },
-    {
-        "name": "Grilled Chicken",
-        "calories": 112
-    },
-    {
-        "name": "Blueberry Topping",
-        "calories": 41
-    }
-]
-    /* get object from backend using user and date (in form yyyy-mm-dd) and set as foodList */
-    /* pass foodList[breakfast], foodList[lunch], and foodList[dinner] as display to MealHistory */
+      middle();
+    
+      } ,[date]);
 
     return (
         <div>
@@ -98,9 +58,9 @@ export default function History() {
                     <input type="date" onChange={e => setDate(e.target.value)}/>
                 </DateDiv>
                 <HistoryDiv>
-                    <MealHistory meal = "Breakfast" display = {breakfast}/>
-                    <MealHistory meal = "Lunch" display = {lunch}/>
-                    <MealHistory meal = "Dinner" display = {dinner}/>
+                    <MealHistory meal = "Breakfast" display = {foodList.breakfast}/>
+                    <MealHistory meal = "Lunch" display = {foodList.lunch}/>
+                    <MealHistory meal = "Dinner" display = {foodList.dinner}/>
                 </HistoryDiv>
                 <CalorieDiv>Total Calories: {totalCalories}</CalorieDiv>
             </div>

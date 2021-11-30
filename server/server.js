@@ -283,32 +283,32 @@ app.post('/logmeal', async (req1, res) => {
 });
 
 
-app.post('/save_history', async (req1, res) => {
+app.post('/save_history', async (req, res) => {
   // console.log("AM I BEING RUN");
-  const foods = 
-  [{
-      "name": "Salad",
-      "allergens": "soy, dairy, nuts",
-      "calories": 218 },
-  {
-      "name": "Brown rice",
-      "allergens": "gluten",
-      "calories": 175 },
-  {
-      "name": "Egg Whites Omelet",
-      "allergens": "eggs",
-      "calories": 174 },
-  {
-      "name": "Prosciutto Sandwich",
-      "allergens": "gluten",
-      "calories": 800 },
-  {
-      "name": "Grilled Chicken",
-      "calories": 112 },
-  {
-      "name": "Blueberry Topping",
-      "calories": 41 }
-  ]
+  // const foods = 
+  // [{
+  //     "name": "Salad",
+  //     "allergens": "soy, dairy, nuts",
+  //     "calories": 218 },
+  // {
+  //     "name": "Brown rice",
+  //     "allergens": "gluten",
+  //     "calories": 175 },
+  // {
+  //     "name": "Egg Whites Omelet",
+  //     "allergens": "eggs",
+  //     "calories": 174 },
+  // {
+  //     "name": "Prosciutto Sandwich",
+  //     "allergens": "gluten",
+  //     "calories": 800 },
+  // {
+  //     "name": "Grilled Chicken",
+  //     "calories": 112 },
+  // {
+  //     "name": "Blueberry Topping",
+  //     "calories": 41 }
+  // ]
     /* 
     TODO: 
     pulling from db to history page
@@ -321,14 +321,14 @@ app.post('/save_history', async (req1, res) => {
     */
   // tester code below: 
 
-  var date = "11-29-2021"
+  // var date = "11-29-2021"
 
-  const req = {
-    body: {
-      username: "rohan",
-      date: date
-    }
-  };
+  // const req = {
+  //   body: {
+  //     username: "rohan",
+  //     date: date
+  //   }
+  // };
 
   const query = req.body;
 
