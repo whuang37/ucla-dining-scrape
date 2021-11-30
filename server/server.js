@@ -29,6 +29,11 @@ app.get('/query', function(req, res){
   res.send(app.get('query_result'));
 });
 
+app.get('/get_history', function(req, res){
+  console.log(JSON.stringify(app.get('history_result'), null, 4));
+  res.send(app.get('history_result'));
+});
+
 app.post('/signup', async (req, res) => {
   await client.connect();
 
@@ -112,7 +117,7 @@ app.post('/user', async (req, res) => {
       app.set('profile', {allergens: u.allergens, calories: u.calories});
       res.redirect('/profile');
     }
-  });
+    });
 });
 
 
@@ -166,7 +171,7 @@ app.post('/foodfilter', async (req, res) => {
 
   var selected_calories = 0;
   selected_calories = req.body.selectedFoods.reduce((partial_sum, a) => partial_sum + a["calories"], 0);
-  // console.log(selected_calories);
+  console.log(selected_calories);
 
   var user_cursor = client.db("diningLog").collection('profiles').find({
     username: req.body.username
@@ -179,7 +184,7 @@ app.post('/foodfilter', async (req, res) => {
 
   function getInfo(doc){
     // if the user has selected to filter by allergens
-    // console.log(req.body.allergens);
+    console.log(req.body.allergens);
     if (req.body.allergens){
       query.allergens = {$nin: doc.allergens};
     } 
@@ -189,10 +194,9 @@ app.post('/foodfilter', async (req, res) => {
   await user_cursor.forEach(getInfo);
 
   // if the user has selected to filter by calories
-  
   if (req.body.calories){
     let calorie_query = calorie_limit - selected_calories;
-    // console.log(calorie_query);
+    console.log(calorie_query);
     query.calories = { $lt: calorie_query};
   } else {
     query.calories = {$exists: true};
@@ -202,8 +206,8 @@ app.post('/foodfilter', async (req, res) => {
 
   var cursor = client.db("diningLog").collection('food').find(query);
 
-  cursor.toArray().then((data) => {app.set('query_result', {usercalories:calorie_limit, foods:data}); res.redirect('/query');});
 
+  cursor.toArray().then((data) => {app.set('query_result', {usercalories:calorie_limit, foods:data}); res.redirect('/query');});
 });
 
 
@@ -235,14 +239,6 @@ app.post('/logmeal', async (req1, res) => {
   ]
     /* 
     TODO: 
-
-    pushing to db
-      get selected foods from frontend post
-        must include name, meal, and food objects
-      append on a date
-
-      push ^^^ into mongodb database under history collection
-    
     pulling from db to history page
       separate post request to pull history data
         by username and date (singular date)
@@ -256,22 +252,21 @@ app.post('/logmeal', async (req1, res) => {
   const req = {
     body: {
       username: "rohan",
-      meal: "lunch",
+      meal: "dinner",
       selectedFoods: foods
     }
   };
   var today = new Date();
 
   var date = (today.getMonth()+1)+'-'+today.getDate()+'-'+today.getFullYear();
-  var insert_object = Object.assign(req);
-  insert_object.body.date = date;
+  req.body.date = date;
 
-  console.log(JSON.stringify(insert_object, null, 2));
+  console.log(JSON.stringify(req, null, 2));
   
   // to check if the current date exists already
   const check_exist_query = {
-    username: insert_object.body.username,
-    meal: insert_object.body.meal,
+    username: req.body.username,
+    meal: req.body.meal,
     date: date
   }
 
@@ -283,20 +278,99 @@ app.post('/logmeal', async (req1, res) => {
     if(err) return console.log(err);
   });
 // insert the received data
-  history.insertOne(insert_object.body, (err, data) => {
+  history.insertOne(req.body, (err, data) => {
     if(err) return console.log(err);
   });
-  // const cursor = users.find({username: req.body.username})
+});
 
+
+app.post('/save_history', async (req1, res) => {
+  // console.log("AM I BEING RUN");
+  const foods = 
+  [{
+      "name": "Salad",
+      "allergens": "soy, dairy, nuts",
+      "calories": 218 },
+  {
+      "name": "Brown rice",
+      "allergens": "gluten",
+      "calories": 175 },
+  {
+      "name": "Egg Whites Omelet",
+      "allergens": "eggs",
+      "calories": 174 },
+  {
+      "name": "Prosciutto Sandwich",
+      "allergens": "gluten",
+      "calories": 800 },
+  {
+      "name": "Grilled Chicken",
+      "calories": 112 },
+  {
+      "name": "Blueberry Topping",
+      "calories": 41 }
+  ]
+    /* 
+    TODO: 
+    pulling from db to history page
+      separate post request to pull history data
+        by username and date (singular date)
+        will have to show breafkast, lunch, dinner + foods so pull all three objects
+
+      get the objects under the user and date
+      return <3 object for each meal, send empty objects for nonexistant meals
+    */
+  // tester code below: 
+
+  var date = "11-29-2021"
+
+  const req = {
+    body: {
+      username: "rohan",
+      date: date
+    }
+  };
+
+  const query = req.body;
+
+  console.log(query);
+
+  await client.connect();
+
+  const history = client.db("diningLog").collection('history');
+
+  var cursor = client.db("diningLog").collection('history').find(query);
+
+
+  function toFoodHistoryObject(data_array) {
     
-  // const user = cursor.next();
-  // user.then((u) => {
-  //   if(u)
-  //   {
-  //     app.set('profile', {allergens: u.allergens, calories: u.calories});
-  //     res.redirect('/profile');
-  //   }
-  //   });
+    if (data_array.length == 0) {
+      return {breakfast: [], lunch: [], dinner: []};
+    }
+
+    var food_history = {}
+    for (var i = 0; i < data_array.length; i++) {
+      food_history[data_array[i].meal] = data_array[i].selectedFoods;
+    }
+
+    let meals = ["breakfast", "lunch", "dinner"];
+    
+    // assign an empty array if theres no pulled data
+    for (var i = 0; i < meals.length; i++) {
+      if (!(meals[i] in food_history)) {
+        food_history[meals[i]] = []; 
+      }
+    }
+
+    return food_history;
+  }
+
+  cursor.toArray().then((data) => { 
+    var food_history = toFoodHistoryObject(data);
+    // console.log(food_history);
+    app.set('history_result', food_history);
+    res.redirect('/get_history');
+  });
 });
 
 
