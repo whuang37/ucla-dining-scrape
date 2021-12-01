@@ -1,4 +1,4 @@
-import React, { useState} from 'react';
+import React, { useEffect, useState} from 'react';
 import { BrowserRouter, Route, Routes, Navigate, Link } from 'react-router-dom';
 import styles from './Login.module.css';
 import BackToLanding from '../backToLanding.js'
@@ -11,7 +11,7 @@ export default function Login(props) {
   const handleSubmit = async e => {
     e.preventDefault();
     async function loginUser(credentials) {
-      fetch('http://localhost:8080/login', {
+      return fetch('http://localhost:8080/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -19,8 +19,14 @@ export default function Login(props) {
         body: JSON.stringify(credentials)
       })
         .then(data => data.json())
-        
-        await fetch('http://localhost:8080/auth')
+    }
+
+    await loginUser({
+      username,
+      password
+    });
+    
+    fetch('http://localhost:8080/auth')
     .then(response => response.json())
     .then(data => {  if(data.response === 'authorized') {
                                           sessionStorage.setItem('username', username)
@@ -32,13 +38,6 @@ export default function Login(props) {
                                         setWrongPass(data.response);
                                       }
                                     });
-     }
-    await loginUser({
-      username,
-      password
-    });
-    
-    
   }
   const renderResponseText = () => {
     if (wrongPass == 'failed') {
@@ -47,7 +46,6 @@ export default function Login(props) {
       return <div class={styles.loginMessage}>No account found, please sign up</div>;
     }
   }
-
   if(!submit)
   {
     return(

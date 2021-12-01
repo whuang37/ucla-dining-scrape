@@ -34,7 +34,17 @@ async function sendUserData(credentials) {
 }
 
 export default function History() {
-    const [date, setDate] = useState()
+    const [date, setDate] = useState(() => {var today = new Date();
+
+      var year = today.getFullYear();
+      var month = today.getMonth() + 1;
+      var day = today.getDate();
+    
+      var d = year + "-" + month + "-" + day;
+    return d})
+
+  
+
     const [foodList, setFoodList] = useState({breakfast:[], lunch:[], dinner:[]})
 
     useEffect(() => {
@@ -64,7 +74,7 @@ export default function History() {
             <NavBar/>
             <div>
                 <DateDiv>
-                  <input type="date" onChange={e => setDate(e.target.value)}/>
+                  <input type="date" value={date} onChange={e => setDate(e.target.value)}/>
                 </DateDiv>
                 <HistoryDiv>
                     <MealHistory meal = "Breakfast" color = "#CD9703" display = {foodList.breakfast}/>

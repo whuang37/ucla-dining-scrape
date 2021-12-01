@@ -2,10 +2,17 @@ import React, { useState, useEffect} from 'react';
 import styled from "styled-components";
 import NavBar from "../navbar"
 
+const TitleDiv = styled.div`
+  padding-left: 30px;
+  font-family: Helvetica;
+  font-size: 40px;
+  text-align: center;
+`
+
 const ProfileDiv = styled.div`
   display: grid;
   grid-template-columns: 45% 55%;
-  min-height: 300px;
+  min-height: 500px;
   padding: 25px;
 `;
 
@@ -15,14 +22,35 @@ const Image = styled.div`
   background-position: center;
   background-size: cover;
   width: 80%;
-  height: 200%;
+  height: 100%;
+  border-radius: 10px;
 `;
 
 const TextDiv = styled.div`
   display: grid;
-  grid-template-rows: auto auto auto;
+  grid-template-rows: 1fr 1fr 1fr;
+  grid-gap: 25px;
   font-family: Helvetica;
+  align-items: center;
 `;
+
+const SectionDiv1 = styled.div`
+  background-color: #3C99EF;
+  border-radius: 10px;
+  padding: 25px;
+`
+
+const SectionDiv2 = styled.div`
+  background-color: #D5AD36;
+  border-radius: 10px;
+  padding: 25px;
+`
+
+const SectionDiv3 = styled.div`
+  background-color: #CD9703;
+  border-radius: 10px;
+  padding: 25px;
+`
 
 async function sendUserData(credentials) {
   return fetch('http://localhost:8080/user', {
@@ -56,13 +84,13 @@ export default function Dashboard() {
       return(
       <div>
         <NavBar/>
-        <h2>Your Profile</h2>
+        <TitleDiv><strong>Your Profile</strong></TitleDiv>
         <ProfileDiv> 
           <Image> </Image>
           <TextDiv>
-            <h3> <strong>{user}</strong> </h3>
-            <h3> <strong>Dietary Restrictions:</strong> {dietaryRestrictions} </h3>
-            <h3> <strong>Daily Calorie Goal:</strong> {calories} </h3>
+            <SectionDiv1><h2> <strong>Welcome, {user}!</strong> </h2></SectionDiv1>
+            <SectionDiv2><h3> <strong>Dietary Restrictions:</strong> {dietaryRestrictions} </h3></SectionDiv2>
+            <SectionDiv3><h3> <strong>Daily Calorie Goal:</strong> {calories} </h3></SectionDiv3>
           </TextDiv>
         </ProfileDiv>
       </div>
