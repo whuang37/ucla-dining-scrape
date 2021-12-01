@@ -15,26 +15,34 @@ const Information = styled.div`
 
 export default function Item(props) {
     const [checked, setChecked] = useState(false);
-    const [displayChecked, setDisplayChecked] = useState(props.checked)
+    const [display, setDisplay] = useState(false)
 
-    console.log(props.name)
-    console.log(props.checked)
+    // only run function after initial render
+    useEffect(() => {
+        if(props.selected.some(food => props.name === food.name)) 
+            setDisplay(true)
+        else
+            setDisplay(false)
+      }, [props.filters]);
 
     const handleChecked=()=>{
-        const curr = checked;
-        setChecked(!checked);
+        console.log("CLICKED")
+        const curr_check = checked;
+        const curr_disp = display;
+        setChecked(!curr_check);
         const food = {name: props.name, allergens: props.allergens, calories: props.calories};
-        props.setSelected(food, !curr);
+        props.setSelected(food, !curr_check);
     }
 
+    // if the item has been selected, make sure the corresponding checkbox stays selected
 
     return (
         <div> 
             <form> 
                 <input
                     type="checkbox"
-                    // checked={displayChecked}
-                    onChange={handleChecked}
+                    checked={display}
+                    onChange={() => handleChecked()}
                 />
                 <FoodName>{props.name}</FoodName>
             </form>

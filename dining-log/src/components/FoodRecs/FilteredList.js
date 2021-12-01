@@ -39,12 +39,21 @@ export default class Filter extends React.Component {
 
 
     async componentDidUpdate(prevProps, prevState){
+        console.log("STATES")
+        // console.log(prevState.allergens);
+        // console.log(this.state.allergens);
+        console.log(JSON.stringify(prevState.selectedFoods));
+        console.log(JSON.stringify(this.state.selectedFoods));
+        console.log("COMPARE STATES")
+        console.log(JSON.stringify(this.state.selectedFoods) !== JSON.stringify(prevState.selectedFoods))
         if (this.state.meal !== prevState.meal || this.state.hall !== prevState.hall || this.state.allergens !== prevState.allergens 
             || this.state.calories !== prevState.calories || JSON.stringify(this.state.queryFoods) !== JSON.stringify(prevState.queryFoods)
             || JSON.stringify(this.state.selectedFoods) !== JSON.stringify(prevState.selectedFoods)) 
         {
             await this.middle();
             this.mergeFoods();
+            // console.log(this.state.queryFoods);
+            // console.log(this.state.selectedFoods);
         }
     }
 
@@ -66,20 +75,24 @@ export default class Filter extends React.Component {
                     queryFoods: data.foods
                 }) 
             });
+        
+        console.log("QUERIED")
     }
     
     // callback function to add foodItem to array of selectedFoods: pass function to foodlist --> fooditem as a prop, call callback function from foodItem with food object as argument to add it to the array of selectedFoods
     setSelected=(food, selected)=>{
-        // add food to selectedList if checkbox is checked
-        if (selected)
+        // check if food is already in selected list
+        const curr = this.state.selectedFoods;
+        const index = curr.map(e => e.name).indexOf(food.name);
+
+        // add food to selectedList if checkbox is checked and not already in list
+        if (selected && index === -1)
             this.setState((state)=>({
                 selectedFoods: [...state.selectedFoods, food]
             }));
         // remove food from list if checkbox got unchecked
         else
         {
-            const curr = this.state.selectedFoods;
-            const index = curr.map(e => e.name).indexOf(food.name);
             if (index !== -1)
             {
                 curr.splice(index, 1);
@@ -88,8 +101,11 @@ export default class Filter extends React.Component {
                 });
             }
         }
-        setTimeout(() => console.log(this.state.selectedFoods), 3000)
+        // setTimeout(() => console.log(this.state.selectedFoods), 3000)
         this.calculateCalories();
+        console.log("SELECTION UPDATED")
+        console.log(selected)
+        //console.log(this.state.selectedFoods)
     }
 
     calculateCalories=()=>{
@@ -122,6 +138,7 @@ export default class Filter extends React.Component {
     }
 
     render() {
+        const filters = {"hall": this.state.hall, "meal": this.state.meal, "allergens": this.state.allergens, "calories": this.state.calories}
         return (
             <div>
                 <div class={styles.filterBar} onChange={this.handleChange}>
@@ -171,7 +188,7 @@ export default class Filter extends React.Component {
                     </form>
                 </div>
     
-                <FoodList meal={this.state.meal} hall={this.state.hall} display={this.state.displayFoods} selected={this.state.selectedFoods} setSelected={this.setSelected}/>
+                <FoodList meal={this.state.meal} hall={this.state.hall} display={this.state.displayFoods} selected={this.state.selectedFoods} setSelected={this.setSelected} filters={filters}/>
 
                 <div>
                     <p>Meal Calories: {this.state.total} </p>

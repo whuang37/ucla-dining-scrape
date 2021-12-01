@@ -26,11 +26,11 @@ const Container = styled.div`
 // props = meal, hall, display {name, allergens, calories}
 export default function List(props) {
     // foodList is an array of FoodItems
-    console.log(props.display)
+    // console.log(props.display)
+    // console.log(props.selected)
     
     const foodList = props.display.map(function(foods){
         let allergens;
-        let checked;
         if (foods.allergens === undefined)
             allergens = []
         else if (typeof foods.allergens === "string")
@@ -41,17 +41,9 @@ export default function List(props) {
             allergens = allergens.join(", ")
         }
 
-        console.log(foods)
-        console.log(foods._id)
-
-        if (foods._id === undefined)
-            checked = true
-        else
-            checked = false
-
         return <div> 
             <FoodItem name={foods.name} allergens={allergens} calories={foods.calories} setSelected={props.setSelected} 
-                    checked={checked}/> 
+                    selected={props.selected} filters={props.filters}/> 
         </div>;
     })
 
