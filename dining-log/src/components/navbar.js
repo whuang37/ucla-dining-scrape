@@ -20,10 +20,10 @@ const NavContainer = styled.div`
 export default function NavBar(props) {
     return (
         <NavContainer>
-            <div> <Link to="/" style={{ textDecoration: 'none' }}><strong>UCLA Dining Food Log</strong></Link> </div> 
-            <div> <Link to="/dashboard" style={{ textDecoration: 'none' }}>Your Profile</Link> </div>
-            <div> <Link to="/foodpage" style={{ textDecoration: 'none' }}>Food Logger</Link> </div>
-            <div> <Link to="/history" style={{ textDecoration: 'none' }}>Eating History</Link> </div>
+            <div> <Link to="/" style={{ textDecoration: 'none', letterSpacing: '.2rem'}}><strong>UCLA Dining Food Log</strong></Link> </div> 
+            <div> <Link to="/dashboard" style={{ textDecoration: 'none', letterSpacing: '.1rem'}}>Your Profile</Link> </div>
+            <div> <Link to="/foodpage" style={{ textDecoration: 'none', letterSpacing: '.1rem'}}>Food Logger</Link> </div>
+            <div> <Link to="/history" style={{ textDecoration: 'none', letterSpacing: '.1rem'}}>Eating History</Link> </div>
         </NavContainer>
     );
 }

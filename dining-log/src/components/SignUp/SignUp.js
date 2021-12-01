@@ -82,35 +82,41 @@ export default function SignUp(props) {
         <h1>Sign Up</h1>
         {renderResponseText()}
         {handleSignedIn()}
-         <form onSubmit={handleSubmit}>
-          <label>
-            <input type="text" placeholder="Email" onChange={e => setUserName(e.target.value)}/>
-          </label>
-          <label>
-            <input type="password" placeholder="Password" onChange={e => setPassword(e.target.value)}/>
-          </label>
-          <div>
+        <div class={styles.signupWrapper}>
+          <form onSubmit={handleSubmit}>
+            <label>
+              <input class={styles.signupInput} type="text" placeholder="Username" onChange={e => setUserName(e.target.value)}/>
+            </label>
+            <br/>
+            <label>
+              <input class={styles.signupInput} type="password" placeholder="Password" onChange={e => setPassword(e.target.value)}/>
+            </label>
+            <br/>
+            <div>
               <p class={styles.prefHeader}>Allergies</p>
               <form class={styles.allergenGrid}>
-                {allergenNammes.map((item, index) => {return(<div>
-                  <input
-                    type="checkbox"
-                    checked={clickedAllergens[index]}
-                    onChange={() => handleCheckBox(index, item)}
-                  />
-                  <span class={styles.label}>{item}</span>
+                {allergenNammes.map((item, index) => {return(<div class={styles.gridBox}>
+                  <label for="allergen">
+                    <input
+                      id="allergen"
+                      type="checkbox"
+                      checked={clickedAllergens[index]}
+                      onChange={() => handleCheckBox(index, item)}
+                    />
+                    <span class={styles.label}>{item}</span>
+                  </label>
                 </div>);})}
               </form>
-
-            <p class={styles.prefHeader}>Daily Calorie Goal</p>
-            <label>
-              <input type="text" id='grey' placeholder="2000" onChange={e => setCalories(e.target.value)}/>
-            </label>
-          </div>
-          <div>
-            <button type="submit">Sign Up</button>
-          </div>
-        </form>
+              <p class={styles.prefHeader}>Daily Calorie Goal</p>
+              <label>
+                <input class={styles.signupInput} type="text" placeholder="2000" onChange={e => setCalories(e.target.value)}/>
+              </label>
+            </div>
+            <div>
+              <button class={styles.signupSubmit} type="submit">Sign Up</button>
+            </div>
+          </form>
+        </div>
       </div>
     )
 }

@@ -52,6 +52,15 @@ h1 {
     display: grid;
     grid-template-rows: 1fr 1fr 1fr;
     grid-template-columns: 1fr 1fr 1fr;
+    align-content: center;
+    justify-content: center;
+    width: 50%;
+    margin-left: 30%;
+}
+
+.gridBox {
+    display: flex;
+    vertical-align: middle;
 }
 
 .prefHeader {
@@ -60,3 +69,8 @@ h1 {
     margin-top: 2%;
     margin-bottom: 5px;
 }
+
+::placeholder {
+    opacity: 0.7;
+}
+
