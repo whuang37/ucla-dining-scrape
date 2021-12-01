@@ -28,7 +28,7 @@ export default function Item(props) {
     const handleChecked=()=>{
         console.log("CLICKED")
         const curr_check = checked;
-        const curr_disp = display;
+        // const curr_disp = display;
         setChecked(!curr_check);
         const food = {name: props.name, allergens: props.allergens, calories: props.calories};
         props.setSelected(food, !curr_check);

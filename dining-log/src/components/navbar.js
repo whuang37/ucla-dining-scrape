@@ -1,7 +1,6 @@
 
 import styled from "styled-components";
 import {  Link } from "react-router-dom";
-import { Navbar, Container, Nav } from 'react-bootstrap';
 
 const NavContainer = styled.div`
     display: grid;

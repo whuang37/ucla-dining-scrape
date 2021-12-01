@@ -1,5 +1,5 @@
-import React, { useEffect, useState} from 'react';
-import { BrowserRouter, Route, Routes, Navigate, Link } from 'react-router-dom';
+import React, { useState} from 'react';
+import {Navigate, Link } from 'react-router-dom';
 import styles from './Login.module.css';
 import BackToLanding from '../backToLanding.js'
 
@@ -40,9 +40,9 @@ export default function Login(props) {
                                     });
   }
   const renderResponseText = () => {
-    if (wrongPass == 'failed') {
+    if (wrongPass === 'failed') {
       return <div class={styles.loginMessage}>Wrong Password</div>;
-    } else if (wrongPass == 'new'){
+    } else if (wrongPass === 'new'){
       return <div class={styles.loginMessage}>No account found, please sign up</div>;
     }
   }

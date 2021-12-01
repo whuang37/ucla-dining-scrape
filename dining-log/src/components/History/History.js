@@ -34,29 +34,28 @@ async function sendUserData(credentials) {
 }
 
 export default function History() {
-    const [date, setDate] = useState(() => {var today = new Date();
+  var today = new Date();
 
       var year = today.getFullYear();
       var month = today.getMonth() + 1;
       var day = today.getDate();
-    
+      if(day <= 9)
+        day = '0' + day;
       var d = year + "-" + month + "-" + day;
-    return d})
-
-  
+    const [date, setDate] = useState(d);
 
     const [foodList, setFoodList] = useState({breakfast:[], lunch:[], dinner:[]})
 
     useEffect(() => {
-        async function middle(){
+      async function middle(){
           await sendUserData({username:sessionStorage.getItem('username'), date:date});
           fetch('http://localhost:8080/get_history')
         .then(response => response.json())
         .then(data => {
           setFoodList(data)});  
-        }
+      }
       middle();
-    
+      console.log(date);
       } ,[date]);
 
     function getTotalCalories(foodList) {

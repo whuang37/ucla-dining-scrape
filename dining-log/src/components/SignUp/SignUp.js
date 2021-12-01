@@ -22,9 +22,7 @@ export default function SignUp(props) {
   const [calories, setCalories] = useState();
 
   const [signedIn, setSignedIn] = useState();
-
-  const [allergenNammes, setAllergenNames] = useState(["gluten", "wheat", "eggs", "milk", "soybeans", "nuts", "fish", "shellfish", "peanuts"])
-
+  const allergenNames = ["gluten", "wheat", "eggs", "milk", "soybeans", "nuts", "fish", "shellfish", "peanuts"];
   const [submit, setSubmit] = useState();
   const handleSubmit = async e => {
     e.preventDefault();
@@ -41,16 +39,15 @@ export default function SignUp(props) {
   .then(data => {setSubmit(data.response)});
     
   }
-  let responseText;
   const renderResponseText = () => {
-    if (submit == 'success') {
+    if (submit === 'success') {
       setTimeout(() =>
       {
         sessionStorage.setItem('username', username);
         setSignedIn(true);
       }, 2000);
       return <div class={styles.signupSuccess}> Account created successfully </div>;
-    } else if (submit == 'failed'){
+    } else if (submit === 'failed'){
       return  <div class={styles.signupError}>Account already exists, <Link to="/login">Sign in</Link></div>;
     }
   }
@@ -95,7 +92,7 @@ export default function SignUp(props) {
             <div>
               <p class={styles.prefHeader}>Allergies</p>
               <form class={styles.allergenGrid}>
-                {allergenNammes.map((item, index) => {return(<div class={styles.gridBox}>
+                {allergenNames.map((item, index) => {return(<div class={styles.gridBox}>
                   <label for="allergen">
                     <input
                       id="allergen"
