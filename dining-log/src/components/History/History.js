@@ -23,7 +23,7 @@ const CalorieDiv = styled.div`
 `;
 
 async function sendUserData(credentials) {
-    return fetch('http://localhost:8080/save_history', {
+    return fetch('http://localhost:8080/show_history', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

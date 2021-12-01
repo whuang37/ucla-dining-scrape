@@ -289,7 +289,7 @@ app.post('/logmeal', async (req, res) => {
 });
 
 
-app.post('/save_history', async (req, res) => {
+app.post('/show_history', async (req, res) => {
   // console.log("AM I BEING RUN");
   // const foods = 
   // [{
