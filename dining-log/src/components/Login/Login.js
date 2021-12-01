@@ -20,13 +20,7 @@ export default function Login(props) {
       })
         .then(data => data.json())
         
-
-     }
-    await loginUser({
-      username,
-      password
-    });
-    fetch('http://localhost:8080/auth')
+        fetch('http://localhost:8080/auth')
     .then(response => response.json())
     .then(data => {  if(data.response === 'authorized') {
                                           sessionStorage.setItem('username', username)
@@ -38,6 +32,12 @@ export default function Login(props) {
                                         setWrongPass(data.response);
                                       }
                                     });
+     }
+    await loginUser({
+      username,
+      password
+    });
+    
     
   }
   const renderResponseText = () => {
