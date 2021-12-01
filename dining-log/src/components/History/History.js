@@ -10,7 +10,7 @@ const DateDiv = styled.div`
 
 const HistoryDiv = styled.div`
     display: grid;
-    grid-template-columns: auto auto auto;
+    grid-template-columns: 1fr 1fr 1fr;
     padding: 10px;
     grid-gap: 25px;
 `;
@@ -50,19 +50,29 @@ export default function History() {
     
       } ,[date]);
 
+    function getTotalCalories(foodList) {
+      let total = 0;
+      for (let meal in foodList) {
+        for (let item in foodList[meal]) {
+            total += foodList[meal][item]["calories"]
+        }
+      }
+      return total
+    }
+
     return (
         <div>
             <NavBar/>
             <div>
                 <DateDiv>
-                    <input type="date" onChange={e => setDate(e.target.value)}/>
+                  <input type="date" onChange={e => setDate(e.target.value)}/>
                 </DateDiv>
                 <HistoryDiv>
                     <MealHistory meal = "Breakfast" display = {foodList.breakfast}/>
                     <MealHistory meal = "Lunch" display = {foodList.lunch}/>
                     <MealHistory meal = "Dinner" display = {foodList.dinner}/>
                 </HistoryDiv>
-                <CalorieDiv>Total Calories: {totalCalories}</CalorieDiv>
+                <CalorieDiv>Total Calories: {getTotalCalories(foodList)}</CalorieDiv>
             </div>
         </div>
     )
