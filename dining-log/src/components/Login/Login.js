@@ -56,7 +56,7 @@ export default function Login(props) {
         <div class={styles.formWrapper}>
           <form onSubmit={handleSubmit}>
             <label>
-              <input class={styles.loginInput} type="text" placeholder="Email" onChange={e => setUserName(e.target.value)} required/>
+              <input class={styles.loginInput} type="text" placeholder="Username" onChange={e => setUserName(e.target.value)} required/>
             </label>
             <br/>
             <label>

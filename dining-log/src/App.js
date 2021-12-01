@@ -24,7 +24,6 @@ export default class App extends React.Component {
     <div className="wrapper">
       <BrowserRouter>
         <Routes>
-        
           <Route path="/" element={<Landing />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/dashboard" element={<Dashboard/>} />

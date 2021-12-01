@@ -2,11 +2,13 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import {Navigate} from 'react-router-dom';
 
-const Text = styled.div`
-    font-family: Helvetica;
+const Welcome = styled.div`
+    font-family: 'Open Sans Condensed', sans-serif;
     text-align: center;
-    font-size: 64px;
+    font-size: 80px;
     margin: 12% auto 2% auto;
+    color: black;
+    font-weight: 500;
 `;
 
 const ButtonDiv = styled.div`
@@ -14,6 +16,7 @@ const ButtonDiv = styled.div`
     grid-template-columns: 1fr 1fr;
     padding: 75px;
     grid-gap: 100px;
+    width: 100%;
 `;
 
 const StyledButton = styled.button`
@@ -21,16 +24,8 @@ const StyledButton = styled.button`
     font-family: Helvetica;
     border: none;
     border-radius: 15px;
-    color: black;
     padding: 20px;
-`;
-
-const LoginButton = styled(StyledButton)`
-    background-color: #3C99EF;
-`;
-
-const SignUpButton = styled(StyledButton)`
-    background-color: #F5D52D;
+    color: white;
 `;
 
 export default function Landing(props) {
@@ -47,12 +42,12 @@ export default function Landing(props) {
     
     return (
         <div>
-            <Text>
+            <Welcome>
                 UCLA Dining Hall Food Log
-            </Text>
+            </Welcome>
             <ButtonDiv>
-                <LoginButton onClick={login}>Login</LoginButton>
-                <SignUpButton onClick={signup}>Sign Up</SignUpButton>
+                <StyledButton onClick={login} style={{backgroundColor: "#1C87E4"}}>Login</StyledButton>
+                <StyledButton onClick={signup} style={{backgroundColor: "#F2C118"}}>Sign Up</StyledButton>
             </ButtonDiv>
         </div>
     );

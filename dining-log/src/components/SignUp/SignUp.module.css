@@ -25,6 +25,7 @@ h1 {
     border: transparent;
     padding: 8px 30px;
     margin-top: 1%;
+    font-size: 18px;
 }
 
 .signupSuccess {
@@ -52,11 +53,26 @@ h1 {
     display: grid;
     grid-template-rows: 1fr 1fr 1fr;
     grid-template-columns: 1fr 1fr 1fr;
+    align-content: center;
+    justify-content: center;
+    width: 50%;
+    margin-left: 30%;
+    font-size: 18px;
+}
+
+.gridBox {
+    display: flex;
+    vertical-align: middle;
 }
 
 .prefHeader {
-    font-size: 20px;
+    font-size: 24px;
     font-weight: bold;
     margin-top: 2%;
     margin-bottom: 5px;
 }
+
+::placeholder {
+    opacity: 0.7;
+}
+
