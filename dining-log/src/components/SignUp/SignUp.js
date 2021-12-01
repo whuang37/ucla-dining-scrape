@@ -49,7 +49,7 @@ export default function SignUp(props) {
         sessionStorage.setItem('username', username);
         setSignedIn(true);
       }, 2000);
-      return <div class={styles.signupSuccess}> Account created successfully, now <Link to="/login">Sign in</Link> </div>;
+      return <div class={styles.signupSuccess}> Account created successfully </div>;
     } else if (submit == 'failed'){
       return  <div class={styles.signupError}>Account already exists, <Link to="/login">Sign in</Link></div>;
     }
@@ -82,7 +82,7 @@ export default function SignUp(props) {
         <h1>Sign Up</h1>
         {renderResponseText()}
         {handleSignedIn()}
-        <form onSubmit={handleSubmit}>
+         <form onSubmit={handleSubmit}>
           <label>
             <input type="text" placeholder="Email" onChange={e => setUserName(e.target.value)}/>
           </label>
