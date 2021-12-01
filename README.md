@@ -57,3 +57,5 @@ The web application should run on your default browser under a localhost url.
 ## Acknowledgements
 
 This website was built using the [MERN Stack Tutorial](https://www.mongodb.com/languages/mern-stack-tutorial).
+
+Special thanks to the Fall 2021 UCLA CS 35L staff and professor Eggert for their generous assistance and work.
