@@ -151,7 +151,7 @@ export default class Filter extends React.Component {
 
     async logMeal(){
         this.setState({isLogged:true});
-        await sendFoods({username: sessionStorage.getItem('username'), meal:this.state.meal, selectedFoods:this.state.selectedFoods});
+        await sendFoods({username: sessionStorage.getItem('username'), meal:this.state.meal.toLowerCase(), selectedFoods:this.state.selectedFoods});
     }
 
     loggedMeal(){
