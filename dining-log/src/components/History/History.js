@@ -36,7 +36,6 @@ async function sendUserData(credentials) {
 export default function History() {
     const [date, setDate] = useState()
     const [foodList, setFoodList] = useState({breakfast:[], lunch:[], dinner:[]})
-    const [totalCalories, setTotalCalories] = useState()
 
     useEffect(() => {
         async function middle(){
@@ -68,9 +67,9 @@ export default function History() {
                   <input type="date" onChange={e => setDate(e.target.value)}/>
                 </DateDiv>
                 <HistoryDiv>
-                    <MealHistory meal = "Breakfast" display = {foodList.breakfast}/>
-                    <MealHistory meal = "Lunch" display = {foodList.lunch}/>
-                    <MealHistory meal = "Dinner" display = {foodList.dinner}/>
+                    <MealHistory meal = "Breakfast" color = "#CD9703" display = {foodList.breakfast}/>
+                    <MealHistory meal = "Lunch" color = "#D5AD36" display = {foodList.lunch}/>
+                    <MealHistory meal = "Dinner" color = "#3C99EF" display = {foodList.dinner}/>
                 </HistoryDiv>
                 <CalorieDiv>Total Calories: {getTotalCalories(foodList)}</CalorieDiv>
             </div>

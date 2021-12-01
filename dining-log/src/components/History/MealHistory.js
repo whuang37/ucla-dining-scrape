@@ -3,14 +3,14 @@ import styled from "styled-components";
 import HistoryItem from "./HistoryFoodItem";
 
 const MealDiv = styled.div`
-    background-color: #C4C4C4;
+    background-color: ${(props) => props.color};
     text-align: center;
     height: 475px;
     padding: 10px;
+    border-radius: 10px;
 `;
 
 const FoodListDiv = styled.div`
-    background-color: #C4C4C4;
     text-align: center;
     height: 375px;
     overflow: scroll;
@@ -45,12 +45,12 @@ export default function MealHistory(props) {
     })
     
     return(
-        <MealDiv>
+        <MealDiv color = {props.color}>
             <h2>{props.meal}</h2>
             <FoodListDiv>
                 {foodList}
             </FoodListDiv>
-            <CalorieDiv>Calories: {calories}</CalorieDiv>
+            <CalorieDiv><strong>Calories: {calories}</strong></CalorieDiv>
         </MealDiv>
     );
 }
