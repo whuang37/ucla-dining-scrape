@@ -59,7 +59,7 @@ export default class Filter extends React.Component {
         // console.log(JSON.stringify(this.state.selectedFoods));
         // console.log("COMPARE STATES")
         // console.log(JSON.stringify(this.state.selectedFoods) !== JSON.stringify(prevState.selectedFoods))
-        console.log(this.state.selectedFoods);
+        // console.log(this.state.selectedFoods);
         if (this.state.meal !== prevState.meal || this.state.hall !== prevState.hall || this.state.allergens !== prevState.allergens 
             || this.state.calories !== prevState.calories || JSON.stringify(this.state.queryFoods) !== JSON.stringify(prevState.queryFoods) || this.state.isLogged !== prevState.isLogged
             || JSON.stringify(this.state.selectedFoods) !== JSON.stringify(prevState.selectedFoods) || this.state.checked) 
