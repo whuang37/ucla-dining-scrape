@@ -1,4 +1,3 @@
-import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import {Navigate, useNavigate} from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
@@ -9,7 +8,7 @@ const StyledButton = styled(Button)`
     font-family: Helvetica;
     border: none;
     border-radius: 15px;
-    padding: 10px;
+    padding: 10px 20px;
     background-color: #ffc107;
 `;
 

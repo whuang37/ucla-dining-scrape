@@ -29,6 +29,7 @@ h1 {
     border: transparent;
     padding: 8px 30px;
     margin: 1% auto 1% auto;
+    font-size: 18px;
 }
 
 .loginMessage {

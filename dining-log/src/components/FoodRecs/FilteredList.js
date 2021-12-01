@@ -52,13 +52,6 @@ export default class Filter extends React.Component {
 
 
     async componentDidUpdate(prevProps, prevState){
-        // console.log("STATES")
-        // // console.log(prevState.allergens);
-        // // console.log(this.state.allergens);
-        // console.log(JSON.stringify(prevState.selectedFoods));
-        // console.log(JSON.stringify(this.state.selectedFoods));
-        // console.log("COMPARE STATES")
-        // console.log(JSON.stringify(this.state.selectedFoods) !== JSON.stringify(prevState.selectedFoods))
         console.log(this.state.selectedFoods);
         if (this.state.meal !== prevState.meal || this.state.hall !== prevState.hall || this.state.allergens !== prevState.allergens 
             || this.state.calories !== prevState.calories || JSON.stringify(this.state.queryFoods) !== JSON.stringify(prevState.queryFoods) || this.state.isLogged !== prevState.isLogged
@@ -119,9 +112,6 @@ export default class Filter extends React.Component {
         // setTimeout(() => console.log(this.state.selectedFoods), 3000)
         this.calculateCalories();
         this.setState({checked: true});
-        // console.log("SELECTION UPDATED")
-        // console.log(selected)
-        //console.log(this.state.selectedFoods)
     }
 
     calculateCalories=()=>{
@@ -133,13 +123,9 @@ export default class Filter extends React.Component {
     // displayFoods = data.foods + selectedFoods
     mergeFoods() {
         const query = this.state.queryFoods
-        // console.log('before concat, selected foods')
-        // console.log(query)
         const selected = this.state.selectedFoods
         // console.log(selected)
         let display = query.concat(selected)
-        // console.log('after concat')
-        // console.log(display)
         for(var i=0; i<display.length; ++i) {
             for(var j=i+1; j<display.length; ++j) {
                 if(display[i].name === display[j].name)
@@ -149,8 +135,6 @@ export default class Filter extends React.Component {
         this.setState({
             displayFoods: display 
         }) 
-        // console.log('without duplicates')
-        // console.log(this.state.displayFoods)
     }
 
     async logMeal(){
@@ -164,7 +148,9 @@ export default class Filter extends React.Component {
     }
 
     render() {
-        const filters = {"hall": this.state.hall, "meal": this.state.meal, "allergens": this.state.allergens, "calories": this.state.calories}
+        const filters = {
+            "hall": this.state.hall, "meal": this.state.meal, "allergens": this.state.allergens, "calories": this.state.calories
+        }
         return (
             <div>
                 <div class={styles.filterBar} onChange={this.handleChange}>
@@ -216,9 +202,9 @@ export default class Filter extends React.Component {
     
                 <FoodList meal={this.state.meal} hall={this.state.hall} display={this.state.displayFoods} selected={this.state.selectedFoods} setSelected={this.setSelected} filters={filters}/>
 
-                <div>
-                    <p>Meal Calories: {this.state.total} </p>
-                    <p>Remaining Daily Calories: {this.state.usercalories - this.state.total} </p>
+                <div class={styles.footer}>
+                    <span>Meal Calories: {this.state.total} </span> <br/>
+                    <span>Remaining Daily Calories: {this.state.usercalories - this.state.total} </span> <br/>
                     <button onClick={() => this.logMeal()}class={styles.button}>Log Meal</button>
                     {this.loggedMeal()}
                 </div>

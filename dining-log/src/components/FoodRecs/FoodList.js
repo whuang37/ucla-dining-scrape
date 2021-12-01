@@ -9,6 +9,7 @@ const Header = styled.div`
     font-size: 40px;
     grid-column: 1 / span 3;
     justify-self: center;
+    letter-spacing: .1rem;
 `;
 
 const Container = styled.div`
@@ -16,7 +17,8 @@ const Container = styled.div`
     grid-template-columns: 1fr 1fr 1fr; 
     gap: 5px;
     justify-content: center;
-    border: 1px solid black;
+    border: 3px solid #1A66DE;
+    border-radius: 0.5rem;
     margin: 2% 2%;
     padding-left: 2%;
     padding-bottom: 2%;
@@ -26,9 +28,6 @@ const Container = styled.div`
 // props = meal, hall, display {name, allergens, calories}
 export default function List(props) {
     // foodList is an array of FoodItems
-    // console.log(props.display)
-    // console.log(props.selected)
-    
     const foodList = props.display.map(function(foods){
         let allergens;
         if (foods.allergens === undefined)

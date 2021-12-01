@@ -25,6 +25,7 @@ h1 {
     border: transparent;
     padding: 8px 30px;
     margin-top: 1%;
+    font-size: 18px;
 }
 
 .signupSuccess {
@@ -56,6 +57,7 @@ h1 {
     justify-content: center;
     width: 50%;
     margin-left: 30%;
+    font-size: 18px;
 }
 
 .gridBox {
@@ -64,7 +66,7 @@ h1 {
 }
 
 .prefHeader {
-    font-size: 20px;
+    font-size: 24px;
     font-weight: bold;
     margin-top: 2%;
     margin-bottom: 5px;
