@@ -13,7 +13,7 @@ Run the following shell commands:
 To start the MongoDB server:
 ```
 cd server
-npm install mongodb express cors dotenv
+npm install
 npm install -g nodemon
 nodemon server
 ```
@@ -21,8 +21,7 @@ nodemon server
 In a new terminal window, start the server for React project:
 ```
 cd ucla-dining-scrape/dining-log
-npm install react-router-dom
-npm install axios
+npm install
 npm install --save react-bootstrap
 npm i styled-components
 npm start

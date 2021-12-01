@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import NavBar from "../navbar"
 import MealHistory from "./MealHistory";
@@ -10,7 +10,7 @@ const DateDiv = styled.div`
 
 const HistoryDiv = styled.div`
     display: grid;
-    grid-template-columns: auto auto auto;
+    grid-template-columns: 1fr 1fr 1fr;
     padding: 10px;
     grid-gap: 25px;
 `;
@@ -22,87 +22,56 @@ const CalorieDiv = styled.div`
     font-size: 24px;
 `;
 
+async function sendUserData(credentials) {
+    return fetch('http://localhost:8080/save_history', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(credentials)
+    })
+      .then(data => data.json())
+}
+
 export default function History() {
     const [date, setDate] = useState()
-    const [foodList, setFoodList] = useState()
-    const [totalCalories, setTotalCalories] = useState()
-    let breakfast = []
-    let lunch = [
-        {
-            "name": "Salad",
-            "allergens": "soy, dairy, nuts",
-            "calories": 218
-        },
-        {
-            "name": "Brown rice",
-            "allergens": "gluten",
-            "calories": 175
-        },
-        {
-            "name": "Egg Whites Omelet",
-            "allergens": "eggs",
-            "calories": 174
-        },
-        {
-            "name": "Prosciutto Sandwich",
-            "allergens": "gluten",
-            "calories": 800
-        },
-        {
-            "name": "Grilled Chicken",
-            "calories": 112
-        },
-        {
-            "name": "Blueberry Topping",
-            "calories": 41
+    const [foodList, setFoodList] = useState({breakfast:[], lunch:[], dinner:[]})
+
+    useEffect(() => {
+        async function middle(){
+          await sendUserData({username:sessionStorage.getItem('username'), date:date});
+          fetch('http://localhost:8080/get_history')
+        .then(response => response.json())
+        .then(data => {
+          setFoodList(data)});  
         }
-    ]
-    let dinner = [
-    {
-        "name": "Salad",
-        "allergens": "soy, dairy, nuts",
-        "calories": 218
-    },
-    {
-        "name": "Brown rice",
-        "allergens": "gluten",
-        "calories": 175
-    },
-    {
-        "name": "Egg Whites Omelet",
-        "allergens": "eggs",
-        "calories": 174
-    },
-    {
-        "name": "Prosciutto Sandwich",
-        "allergens": "gluten",
-        "calories": 800
-    },
-    {
-        "name": "Grilled Chicken",
-        "calories": 112
-    },
-    {
-        "name": "Blueberry Topping",
-        "calories": 41
+      middle();
+    
+      } ,[date]);
+
+    function getTotalCalories(foodList) {
+      let total = 0;
+      for (let meal in foodList) {
+        for (let item in foodList[meal]) {
+            total += foodList[meal][item]["calories"]
+        }
+      }
+      return total
     }
-]
-    /* get object from backend using user and date (in form yyyy-mm-dd) and set as foodList */
-    /* pass foodList[breakfast], foodList[lunch], and foodList[dinner] as display to MealHistory */
 
     return (
         <div>
             <NavBar/>
             <div>
                 <DateDiv>
-                    <input type="date" onChange={e => setDate(e.target.value)}/>
+                  <input type="date" onChange={e => setDate(e.target.value)}/>
                 </DateDiv>
                 <HistoryDiv>
-                    <MealHistory meal = "Breakfast" display = {breakfast}/>
-                    <MealHistory meal = "Lunch" display = {lunch}/>
-                    <MealHistory meal = "Dinner" display = {dinner}/>
+                    <MealHistory meal = "Breakfast" color = "#CD9703" display = {foodList.breakfast}/>
+                    <MealHistory meal = "Lunch" color = "#D5AD36" display = {foodList.lunch}/>
+                    <MealHistory meal = "Dinner" color = "#3C99EF" display = {foodList.dinner}/>
                 </HistoryDiv>
-                <CalorieDiv>Total Calories: {totalCalories}</CalorieDiv>
+                <CalorieDiv>Total Calories: {getTotalCalories(foodList)}</CalorieDiv>
             </div>
         </div>
     )

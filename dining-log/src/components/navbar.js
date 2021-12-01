@@ -1,36 +1,29 @@
 
 import styled from "styled-components";
-import { Container, Navbar, Nav, NavItem, NavDropdown, MenuItem } from 'react-bootstrap';
+import {  Link } from "react-router-dom";
+import { Navbar, Container, Nav } from 'react-bootstrap';
 
-const NavContainer = styled(Container)`
+const NavContainer = styled.div`
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
     font-family: Helvetica;
-    text-align: center;
+    font-size: 20px;
+    justify-items: center;
+    align-items: center;
     background-color: #C4C4C4;
     width: 100%;
+    height: 50px;
     margin-bottom: 2%;
-`;
-
-const StyledNav = styled(Nav)`
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-gap: 150px;
-    text-align: center;
+    border-radius: 10px;
 `;
 
 export default function NavBar(props) {
     return (
-        <Navbar expand="lg">
-            <NavContainer>
-                <Navbar.Brand href="/">Dining Hall Food Log</Navbar.Brand>
-                <Navbar.Toggle aria-controls="basic-navbar-nav" />
-                <Navbar.Collapse id="basic-navbar-nav">
-                <StyledNav>
-                    <Nav.Link href="/dashboard">Your Profile</Nav.Link>
-                    <Nav.Link href="/history">Eating History</Nav.Link>
-                    <Nav.Link href="/foodpage">Meal Logger and Planner</Nav.Link>
-                </StyledNav>
-                </Navbar.Collapse>
-            </NavContainer>
-        </Navbar>
+        <NavContainer>
+            <div> <Link to="/" style={{ textDecoration: 'none' }}><strong>UCLA Dining Food Log</strong></Link> </div> 
+            <div> <Link to="/dashboard" style={{ textDecoration: 'none' }}>Your Profile</Link> </div>
+            <div> <Link to="/foodpage" style={{ textDecoration: 'none' }}>Food Logger</Link> </div>
+            <div> <Link to="/history" style={{ textDecoration: 'none' }}>Eating History</Link> </div>
+        </NavContainer>
     );
 }

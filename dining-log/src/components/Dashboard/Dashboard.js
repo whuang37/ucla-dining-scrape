@@ -46,7 +46,7 @@ export default function Dashboard() {
       fetch('http://localhost:8080/profile')
     .then(response => response.json())
     .then(data => {
-      setDietaryRestrictions(data.allergens); setCalories(data.calories);});  
+      setDietaryRestrictions(data.allergens.join(', ')); setCalories(data.calories);});  
     }
   middle();
 
