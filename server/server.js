@@ -170,20 +170,20 @@ app.post('/foodfilter', async (req, res) => {
 
   var selected_calories = 0;
   selected_calories = req.body.selectedFoods.reduce((partial_sum, a) => partial_sum + a["calories"], 0);
-  console.log(selected_calories);
+  // console.log(selected_calories);
 
   var user_cursor = client.db("diningLog").collection('profiles').find({
     username: req.body.username
   }); 
 
-  console.log(req.body);
+  // console.log(req.body);
 
   var calorie_limit;
   query.allergens = {$nin: []};
 
   function getInfo(doc){
     // if the user has selected to filter by allergens
-    console.log(req.body.allergens);
+    // console.log(req.body.allergens);
     if (req.body.allergens){
       query.allergens = {$nin: doc.allergens};
     } 
@@ -195,7 +195,7 @@ app.post('/foodfilter', async (req, res) => {
   // if the user has selected to filter by calories
   if (req.body.calories){
     let calorie_query = calorie_limit - selected_calories;
-    console.log(calorie_query);
+    // console.log(calorie_query);
     query.calories = { $lt: calorie_query};
   } else {
     query.calories = {$exists: true};
@@ -266,7 +266,7 @@ app.post('/logmeal', async (req, res) => {
   // var date = today.getFullYear()+"-"(today.getMonth()+1)+"-"+today.getDate();
   req.body.date = date;
 
-  console.log(JSON.stringify(req.body, null, 2));
+  // console.log(JSON.stringify(req.body, null, 2));
   
   // to check if the current date exists already
   const check_exist_query = {

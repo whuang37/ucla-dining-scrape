@@ -23,7 +23,7 @@ export default function Item(props) {
             setDisplay(true)
         else
             setDisplay(false)
-      }, [props.filters]);
+      }, [props, display, checked]);
 
     const handleChecked=()=>{
         console.log("CLICKED")

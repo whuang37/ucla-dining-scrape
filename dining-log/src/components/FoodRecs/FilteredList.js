@@ -42,6 +42,7 @@ export default class Filter extends React.Component {
             usercalories: 0,
             total: 0,
             isLogged: false,
+            checked: false,
         };
     } 
 
@@ -51,19 +52,20 @@ export default class Filter extends React.Component {
 
 
     async componentDidUpdate(prevProps, prevState){
-        console.log("STATES")
-        // console.log(prevState.allergens);
-        // console.log(this.state.allergens);
-        console.log(JSON.stringify(prevState.selectedFoods));
-        console.log(JSON.stringify(this.state.selectedFoods));
-        console.log("COMPARE STATES")
-        console.log(JSON.stringify(this.state.selectedFoods) !== JSON.stringify(prevState.selectedFoods))
+        // console.log("STATES")
+        // // console.log(prevState.allergens);
+        // // console.log(this.state.allergens);
+        // console.log(JSON.stringify(prevState.selectedFoods));
+        // console.log(JSON.stringify(this.state.selectedFoods));
+        // console.log("COMPARE STATES")
+        // console.log(JSON.stringify(this.state.selectedFoods) !== JSON.stringify(prevState.selectedFoods))
+        console.log(this.state.selectedFoods);
         if (this.state.meal !== prevState.meal || this.state.hall !== prevState.hall || this.state.allergens !== prevState.allergens 
             || this.state.calories !== prevState.calories || JSON.stringify(this.state.queryFoods) !== JSON.stringify(prevState.queryFoods) || this.state.isLogged !== prevState.isLogged
-            || JSON.stringify(this.state.selectedFoods) !== JSON.stringify(prevState.selectedFoods)) 
+            || JSON.stringify(this.state.selectedFoods) !== JSON.stringify(prevState.selectedFoods) || this.state.checked) 
         {
             await this.middle();
-            this.mergeFoods();
+            this.setState({checked:false});
             if(this.state.isLogged)
                 setTimeout(() => this.setState({isLogged:false}), 3000);
         }
@@ -88,7 +90,8 @@ export default class Filter extends React.Component {
                 }) 
             });
         
-        console.log("QUERIED")
+        this.mergeFoods();
+        // console.log("QUERIED")
     }
     
     // callback function to add foodItem to array of selectedFoods: pass function to foodlist --> fooditem as a prop, call callback function from foodItem with food object as argument to add it to the array of selectedFoods
@@ -115,8 +118,9 @@ export default class Filter extends React.Component {
         }
         // setTimeout(() => console.log(this.state.selectedFoods), 3000)
         this.calculateCalories();
-        console.log("SELECTION UPDATED")
-        console.log(selected)
+        this.setState({checked: true});
+        // console.log("SELECTION UPDATED")
+        // console.log(selected)
         //console.log(this.state.selectedFoods)
     }
 
