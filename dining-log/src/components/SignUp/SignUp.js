@@ -1,7 +1,7 @@
 import React, { useState} from 'react';
 import styles from './SignUp.module.css';
 import BackToLanding from '../backToLanding.js'
-import {Link} from 'react-router-dom';
+import {Link, Navigate} from 'react-router-dom';
 
  async function signUpUser(credentials) {
     return fetch('http://localhost:8080/signup', {
@@ -21,12 +21,14 @@ export default function SignUp(props) {
   const [clickedAllergens, setClickedAllergens] = useState(new Array(9).fill(false));
   const [calories, setCalories] = useState();
 
+  const [signedIn, setSignedIn] = useState();
+
   const [allergenNammes, setAllergenNames] = useState(["gluten", "wheat", "eggs", "milk", "soybeans", "nuts", "fish", "shellfish", "peanuts"])
 
   const [submit, setSubmit] = useState();
   const handleSubmit = async e => {
     e.preventDefault();
-    console.log(allergens);
+    // console.log(allergens);
     await signUpUser({
       username,
       password,
@@ -42,6 +44,11 @@ export default function SignUp(props) {
   let responseText;
   const renderResponseText = () => {
     if (submit == 'success') {
+      setTimeout(() =>
+      {
+        sessionStorage.setItem('username', username);
+        setSignedIn(true);
+      }, 2000);
       return <div class={styles.signupSuccess}> Account created successfully, now <Link to="/login">Sign in</Link> </div>;
     } else if (submit == 'failed'){
       return  <div class={styles.signupError}>Account already exists, <Link to="/login">Sign in</Link></div>;
@@ -67,11 +74,14 @@ export default function SignUp(props) {
     
   }
 
+  const handleSignedIn = () => {if(signedIn){return (<Navigate to="/dashboard"></Navigate>);}}
+
     return(
       <div>
         <BackToLanding/>
         <h1>Sign Up</h1>
         {renderResponseText()}
+        {handleSignedIn()}
         <form onSubmit={handleSubmit}>
           <label>
             <input type="text" placeholder="Email" onChange={e => setUserName(e.target.value)}/>

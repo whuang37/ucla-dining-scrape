@@ -20,7 +20,7 @@ export default function Login(props) {
       })
         .then(data => data.json())
         
-        fetch('http://localhost:8080/auth')
+        await fetch('http://localhost:8080/auth')
     .then(response => response.json())
     .then(data => {  if(data.response === 'authorized') {
                                           sessionStorage.setItem('username', username)

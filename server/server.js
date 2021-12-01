@@ -210,32 +210,32 @@ app.post('/foodfilter', async (req, res) => {
 });
 
 
-app.post('/logmeal', async (req1, res) => {
+app.post('/logmeal', async (req, res) => {
   // console.log("AM I BEING RUN");
-  const foods = 
-  [{
-      "name": "Salad",
-      "allergens": "soy, dairy, nuts",
-      "calories": 218 },
-  {
-      "name": "Brown rice",
-      "allergens": "gluten",
-      "calories": 175 },
-  {
-      "name": "Egg Whites Omelet",
-      "allergens": "eggs",
-      "calories": 174 },
-  {
-      "name": "Prosciutto Sandwich",
-      "allergens": "gluten",
-      "calories": 800 },
-  {
-      "name": "Grilled Chicken",
-      "calories": 112 },
-  {
-      "name": "Blueberry Topping",
-      "calories": 41 }
-  ]
+  // const foods = 
+  // [{
+  //     "name": "Salad",
+  //     "allergens": "soy, dairy, nuts",
+  //     "calories": 218 },
+  // {
+  //     "name": "Brown rice",
+  //     "allergens": "gluten",
+  //     "calories": 175 },
+  // {
+  //     "name": "Egg Whites Omelet",
+  //     "allergens": "eggs",
+  //     "calories": 174 },
+  // {
+  //     "name": "Prosciutto Sandwich",
+  //     "allergens": "gluten",
+  //     "calories": 800 },
+  // {
+  //     "name": "Grilled Chicken",
+  //     "calories": 112 },
+  // {
+  //     "name": "Blueberry Topping",
+  //     "calories": 41 }
+  // ]
     /* 
     TODO: 
     pulling from db to history page
@@ -248,24 +248,30 @@ app.post('/logmeal', async (req1, res) => {
     */
 
 
-  const req = {
-    body: {
-      username: "rohan",
-      meal: "dinner",
-      selectedFoods: foods
-    }
-  };
+  // const req = {
+  //   body: {
+  //     username: "rohan",
+  //     meal: "dinner",
+  //     selectedFoods: foods
+  //   }
+  // };
   var today = new Date();
 
-  var date = today.getFullYear()+'-'(today.getMonth()+1)+'-'+today.getDate();
+  var year = today.getFullYear();
+  var month = today.getMonth() + 1;
+  var day = today.getDate();
+
+  var date = year + "-" + month + "-" + day;
+
+  // var date = today.getFullYear()+"-"(today.getMonth()+1)+"-"+today.getDate();
   req.body.date = date;
 
-  console.log(JSON.stringify(req, null, 2));
+  console.log(JSON.stringify(req.body, null, 2));
   
   // to check if the current date exists already
   const check_exist_query = {
     username: req.body.username,
-    meal: req.body.meal,
+    meal: req.body.meal.toLowerCase(),
     date: date
   }
 

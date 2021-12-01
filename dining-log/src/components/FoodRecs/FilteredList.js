@@ -15,6 +15,17 @@ async function getFoods(filters) {
     .then(data => data.json())
 }
 
+async function sendFoods(filters) {
+    return fetch('http://localhost:8080/logmeal', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(filters)
+    })
+    .then(data => data.json())
+}
+
 export default class Filter extends React.Component {
     constructor(props) {
         super(props);
@@ -29,7 +40,8 @@ export default class Filter extends React.Component {
             queryFoods: [],   
             displayFoods: [],
             usercalories: 0,
-            total: 0
+            total: 0,
+            isLogged: false,
         };
     } 
 
@@ -40,11 +52,13 @@ export default class Filter extends React.Component {
 
     async componentDidUpdate(prevProps, prevState){
         if (this.state.meal !== prevState.meal || this.state.hall !== prevState.hall || this.state.allergens !== prevState.allergens 
-            || this.state.calories !== prevState.calories || JSON.stringify(this.state.queryFoods) !== JSON.stringify(prevState.queryFoods)
+            || this.state.calories !== prevState.calories || JSON.stringify(this.state.queryFoods) !== JSON.stringify(prevState.queryFoods) || this.state.isLogged !== prevState.isLogged
             || JSON.stringify(this.state.selectedFoods) !== JSON.stringify(prevState.selectedFoods)) 
         {
             await this.middle();
             this.mergeFoods();
+            if(this.state.isLogged)
+                setTimeout(() => this.setState({isLogged:false}), 3000);
         }
     }
 
@@ -121,6 +135,16 @@ export default class Filter extends React.Component {
         // console.log(this.state.displayFoods)
     }
 
+    async logMeal(){
+        this.setState({isLogged:true});
+        await sendFoods({username: sessionStorage.getItem('username'), meal:this.state.meal, selectedFoods:this.state.selectedFoods});
+    }
+
+    loggedMeal(){
+        if(this.state.isLogged)
+         return (<div>Logged Meals!</div>);
+    }
+
     render() {
         return (
             <div>
@@ -176,7 +200,8 @@ export default class Filter extends React.Component {
                 <div>
                     <p>Meal Calories: {this.state.total} </p>
                     <p>Remaining Daily Calories: {this.state.usercalories - this.state.total} </p>
-                    <button class={styles.button}>Log Meal</button>
+                    <button onClick={() => this.logMeal()}class={styles.button}>Log Meal</button>
+                    {this.loggedMeal()}
                 </div>
             </div>
         )
